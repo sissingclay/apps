@@ -1,0 +1,15 @@
+<figure>
+  <img
+    src="assets/img/img2.jpg"
+    class="img mb-6"
+    [class.--secondary]="background() === 'secondary'"
+    [class.--tertiary]="background() === 'tertiary'"
+  />
+  <figcaption
+    class="subtitle"
+    [class.is-3]="subtitle()"
+    [class.is-5]="!subtitle()"
+  >
+    <ng-content></ng-content>
+  </figcaption>
+</figure>
