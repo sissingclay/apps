@@ -8,4 +8,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './ui.component.scss',
   imports: [RouterModule],
 })
-export class UiAppBarComponent {}
+export class UiAppBarComponent {
+  isActive = false;
+}

@@ -12,15 +12,73 @@
 <section class="container section">
   <article class="columns">
     <section class="column is-one-fifth-tablet">
-      <lib-ui-button class="mb-2"></lib-ui-button>
-      <lib-ui-button></lib-ui-button>
+      <aside class="menu">
+        <p class="menu-label">General</p>
+        <ul class="menu-list">
+          <li><a>Dashboard</a></li>
+          <li><a>Customers</a></li>
+        </ul>
+        <p class="menu-label">Administration</p>
+        <ul class="menu-list">
+          <li><a>Team Settings</a></li>
+          <li>
+            <a class="is-active">Manage Your Team</a>
+            <ul>
+              <li><a>Members</a></li>
+              <li><a>Plugins</a></li>
+              <li><a>Add a member</a></li>
+            </ul>
+          </li>
+          <li><a>Invitations</a></li>
+          <li><a>Cloud Storage Environment Settings</a></li>
+          <li><a>Authentication</a></li>
+        </ul>
+        <p class="menu-label">Transactions</p>
+        <ul class="menu-list">
+          <li><a>Payments</a></li>
+          <li><a>Transfers</a></li>
+          <li><a>Balance</a></li>
+        </ul>
+      </aside>
     </section>
 
     <section class="column">
-      <nav>
-        <a href="">Team Info</a>
-        <a href="">Fixtures</a>
-      </nav>
+      <div class="tabs is-centered">
+        <ul>
+          <li class="is-active">
+            <a>
+              <span class="icon is-small"
+                ><i class="fas fa-image" aria-hidden="true"></i
+              ></span>
+              <span>Pictures</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"
+                ><i class="fas fa-music" aria-hidden="true"></i
+              ></span>
+              <span>Music</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"
+                ><i class="fas fa-film" aria-hidden="true"></i
+              ></span>
+              <span>Videos</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"
+                ><i class="far fa-file-alt" aria-hidden="true"></i
+              ></span>
+              <span>Documents</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
       <section class="columns">
         <section class="column is-two-thirds-tablet content">
@@ -40,6 +98,12 @@
             mattis. Donec sagittis sem nunc, vel ullamcorper ligula elementum
             vel.
           </p>
+
+          <h2 class="subtitle is-5">Officals</h2>
+          <lib-officials></lib-officials>
+          <lib-officials></lib-officials>
+          <lib-officials></lib-officials>
+          <lib-officials></lib-officials>
         </section>
         <section class="column">
           <lib-ui-figure class="mb-2"></lib-ui-figure>

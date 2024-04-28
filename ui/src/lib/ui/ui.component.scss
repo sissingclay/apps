@@ -1,3 +1,28 @@
+@use 'bulma/sass/utilities/mixins';
+
 :host {
   display: block;
+  padding-bottom: 30px;
+  background-color: #dcfffd;
+
+  @include mixins.desktop {
+    padding-bottom: 65px;
+  }
+}
+
+.spacing {
+  margin-bottom: 65px;
+}
+
+.logo {
+  position: absolute;
+  max-height: 115px !important;
+  top: 5px;
+  left: 10px;
+  max-width: 150px !important;
+
+  @include mixins.desktop {
+    max-height: 200px !important;
+    left: 45px;
+  }
 }

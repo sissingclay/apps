@@ -12,8 +12,6 @@ $white: #ffffff;
 
 @use 'bulma/sass' with (
   $family-primary: '"Nunito", sans-serif',
-  $grey-dark: $grey-darker,
-  $grey-light: $beige-light,
   $info: $light-teal,
   $primary: $primary,
   $link: $white,
