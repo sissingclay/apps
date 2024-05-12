@@ -21,6 +21,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: ':under',
+        loadComponent: () =>
+          import('./feature/teams/team/team.component').then(
+            (mod) => mod.TeamComponent
+          ),
+      },
+      {
         path: ':under/:team',
         loadComponent: () =>
           import('./feature/teams/team/team.component').then(

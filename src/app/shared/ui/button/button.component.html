@@ -1,5 +1,5 @@
-<button>
-  <span class="text">Under 18's</span>
+<a [routerLink]="createUnderRouter()" class="button is-white">
+  <span class="text" [textContent]="createUnder()"></span>
   <svg
     width="24"
     height="24"
@@ -12,4 +12,4 @@
       fill="#0157FF"
     />
   </svg>
-</button>
+</a>

@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  OfficialsComponent,
-  UiLibButtonComponent,
-  UiLibFigureComponent,
-} from '@apps/ui';
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
+import { OfficialsComponent, UiLibFigureComponent } from '@apps/ui';
+import { UiLibButtonComponent } from '../../../shared/ui/button/button.component';
+import { StoreService } from '../../../shared/services/store/store.service';
 
 @Component({
   selector: 'app-team',
@@ -13,4 +16,10 @@ import {
   styleUrl: './team.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeamComponent {}
+export class TeamComponent implements OnInit {
+  public storeService = inject(StoreService);
+
+  ngOnInit(): void {
+    this.storeService.getYearTeamsData();
+  }
+}

@@ -1,0 +1,30 @@
+<section class="hero" *ngIf="storeService.homeData$ | async as homeData">
+  <div class="hero-body container">
+    <section class="columns">
+      <section class="column is-4">
+        @for (content of homeData.heroData; track content) {
+
+        <h1
+          class="title is-size-1"
+          *ngIf="content.nodeType === 'heading-1'"
+          [textContent]="content.content?.[0].value"
+        ></h1>
+        <p
+          class="subtitle is-4 mt-4"
+          *ngIf="content.nodeType !== 'heading-1'"
+          [textContent]="content.content?.[0].value"
+        ></p>
+
+        }
+        <button class="button is-primary mr-2 mb-2">About the Club</button>
+        <a class="button is-white" [routerLink]="routeTeam"> Our Teams </a>
+      </section>
+
+      <section class="column is-8">
+        <div class="is-flex is-justify-content-end">
+          <img [src]="homeData.heroImage.fields.file.url" class="img image" />
+        </div>
+      </section>
+    </section>
+  </div>
+</section>

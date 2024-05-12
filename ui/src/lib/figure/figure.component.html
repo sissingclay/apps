@@ -1,10 +1,5 @@
 <figure>
-  <img
-    src="assets/img/img2.jpg"
-    class="img mb-6"
-    [class.--secondary]="background() === 'secondary'"
-    [class.--tertiary]="background() === 'tertiary'"
-  />
+  <img [src]="sanitizeImageUrl()" class="img mb-6 secondary" />
   <figcaption
     class="subtitle"
     [class.is-3]="subtitle()"
