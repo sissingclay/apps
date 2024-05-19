@@ -21,7 +21,7 @@
           <a [href]="sponsor.fields.domain" target="_blank">
             <figure class="image is-64x64">
               <img
-                [attr.src]="sponsor.fields.logo.fields.file.url"
+                [attr.src]="sponsor.fields.logo?.fields?.file?.url"
                 [attr.alt]="sponsor.fields.name"
               />
             </figure>

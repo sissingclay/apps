@@ -12,7 +12,7 @@
       <h1 class="title">Our Value</h1>
       <div class="grid">
         @for (figure of value?.list; track figure) {
-        <lib-ui-figure [image]="figure.file.fields.file.url" class="cell">
+        <lib-ui-figure [image]="figure?.file?.fields?.file.url" class="cell">
           {{ figure.fields.details }}
         </lib-ui-figure>
         }
