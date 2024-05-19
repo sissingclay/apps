@@ -1,4 +1,4 @@
-import { TEAMS } from '../constants/routes.constants';
+import { TEAMS } from '@apps/ui';
 
 export const UNDER = (year: string) => {
   const DATE = new Date();

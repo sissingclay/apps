@@ -10,7 +10,7 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
-import { TEAMS } from '../../../../shared/constants/routes.constants';
+import { TEAMS } from '@apps/ui';
 import { filter, takeUntil } from 'rxjs';
 import { AppRteComponent } from '../../../../shared/components/rte/rte.component';
 import { DestroyService } from '../../../../shared/services/destroy/destroy.service';

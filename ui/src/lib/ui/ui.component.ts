@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ROOT, TEAMS } from '../constants/routes.constants';
 
 @Component({
   selector: 'lib-ui-app-bar',
@@ -9,5 +10,9 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
 })
 export class UiAppBarComponent {
-  isActive = false;
+  public isActive = false;
+  public routesLinks = {
+    home: ROOT,
+    teams: TEAMS,
+  };
 }

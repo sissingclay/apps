@@ -17,11 +17,11 @@ import { TEAMS } from '@apps/ui';
     RouterLink,
     RouterLinkActive,
   ],
-  templateUrl: './info.component.html',
-  styleUrl: './info.component.scss',
+  templateUrl: './detail.component.html',
+  styleUrl: './detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InfoComponent {
+export class DetailComponent {
   public year = '';
   public under!: any;
   public readonly TEAMS_URL = TEAMS;

@@ -17,7 +17,7 @@ import {
 } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { TEAM_URL, UNDER } from '../../../shared/helpers/helpers.year';
-import { TEAMS } from '../../../shared/constants/routes.constants';
+import { TEAMS } from '@apps/ui';
 import { DestroyService } from '../../../shared/services/destroy/destroy.service';
 import { filter, takeUntil } from 'rxjs';
 
