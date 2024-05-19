@@ -3,8 +3,10 @@
     <div
       class="hero-body is-flex is-justify-content-space-between is-align-content-center is-align-items-center"
     >
-      <h1 class="title">Under 11’s</h1>
-      <a href="">Back to Our Teams</a>
+      <h1 class="title">{{ under.label }}</h1>
+      <p class="subtitle">
+        <a [routerLink]="TEAMS_URL">Back to Our Teams</a>
+      </p>
     </div>
   </section>
 </section>
@@ -13,108 +15,44 @@
   <article class="columns">
     <section class="column is-one-fifth-tablet">
       <aside class="menu">
-        <p class="menu-label">General</p>
+        <p class="menu-label">Team(s)</p>
         <ul class="menu-list">
-          <li><a>Dashboard</a></li>
-          <li><a>Customers</a></li>
-        </ul>
-        <p class="menu-label">Administration</p>
-        <ul class="menu-list">
-          <li><a>Team Settings</a></li>
+          @for (team of storeService.getTeams$(year) | async; track team) {
           <li>
-            <a class="is-active">Manage Your Team</a>
-            <ul>
-              <li><a>Members</a></li>
-              <li><a>Plugins</a></li>
-              <li><a>Add a member</a></li>
-            </ul>
+            <a [routerLink]="createUnderRouter(team.fields.slug)">
+              {{ team.fields.name }}
+            </a>
           </li>
-          <li><a>Invitations</a></li>
-          <li><a>Cloud Storage Environment Settings</a></li>
-          <li><a>Authentication</a></li>
-        </ul>
-        <p class="menu-label">Transactions</p>
-        <ul class="menu-list">
-          <li><a>Payments</a></li>
-          <li><a>Transfers</a></li>
-          <li><a>Balance</a></li>
+          }
         </ul>
       </aside>
     </section>
 
     <section class="column">
-      <div class="tabs is-centered">
+      <div class="tabs mb-6">
         <ul>
-          <li class="is-active">
-            <a>
+          <li routerLinkActive="is-active">
+            <a [routerLink]="['detail']">
               <span class="icon is-small"
                 ><i class="fas fa-image" aria-hidden="true"></i
               ></span>
-              <span>Pictures</span>
+              <span>Team Info</span>
             </a>
           </li>
-          <li>
-            <a>
+          <li routerLinkActive="is-active">
+            <a [routerLink]="['info']">
               <span class="icon is-small"
-                ><i class="fas fa-music" aria-hidden="true"></i
+                ><i class="fas fa-image" aria-hidden="true"></i
               ></span>
-              <span>Music</span>
-            </a>
-          </li>
-          <li>
-            <a>
-              <span class="icon is-small"
-                ><i class="fas fa-film" aria-hidden="true"></i
-              ></span>
-              <span>Videos</span>
-            </a>
-          </li>
-          <li>
-            <a>
-              <span class="icon is-small"
-                ><i class="far fa-file-alt" aria-hidden="true"></i
-              ></span>
-              <span>Documents</span>
+              <span>Fees</span>
             </a>
           </li>
         </ul>
       </div>
 
-      <section class="columns">
-        <section class="column is-two-thirds-tablet content">
-          <h1 class="subtitle is-4">Athletics Team</h1>
-          <p>
-            A few lines of text about the team. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Cras blandit orci ullamcorper,
-            malesuada tortor a, laoreet mi. Sed ut velit eget mi suscipit
-            mattis. Donec sagittis sem nunc, vel ullamcorper ligula elementum
-            vel.
-          </p>
-          <h2 class="subtitle is-5">Training</h2>
-          <p>
-            A few lines of text about the team. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Cras blandit orci ullamcorper,
-            malesuada tortor a, laoreet mi. Sed ut velit eget mi suscipit
-            mattis. Donec sagittis sem nunc, vel ullamcorper ligula elementum
-            vel.
-          </p>
-
-          <h2 class="subtitle is-5">Officals</h2>
-          <lib-officials></lib-officials>
-          <lib-officials></lib-officials>
-          <lib-officials></lib-officials>
-          <lib-officials></lib-officials>
-        </section>
-        <section class="column">
-          <lib-ui-figure class="mb-2"></lib-ui-figure>
-
-          <section class="content">
-            <h3 class="subtitle is-5">Our Sponsors</h3>
-            <img src="assets/img/GR.png" />
-            <img src="assets/img/GR.png" />
-            <img src="assets/img/GR.png" />
-          </section>
-        </section>
+      <section class="columns m-0">
+        <h1></h1>
+        <router-outlet></router-outlet>
       </section>
     </section>
   </article>

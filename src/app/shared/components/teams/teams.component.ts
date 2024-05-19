@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 import { StoreService } from '../../services/store/store.service';
 import { UiLibButtonComponent } from '../../ui/button/button.component';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe, KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-teams-widget',
   standalone: true,
-  imports: [UiLibButtonComponent, AsyncPipe],
+  imports: [UiLibButtonComponent, AsyncPipe, KeyValuePipe, JsonPipe],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,4 +8,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './officials.component.html',
   styleUrl: './officials.component.css',
 })
-export class OfficialsComponent {}
+export class OfficialsComponent {
+  official = input.required<{
+    fields: {
+      name?: string;
+      emailAddress?: string;
+      phoneNumbner?: string;
+      type?: string[];
+    };
+  }>();
+}

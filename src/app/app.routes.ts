@@ -33,6 +33,27 @@ export const appRoutes: Route[] = [
           import('./feature/teams/team/team.component').then(
             (mod) => mod.TeamComponent
           ),
+        children: [
+          {
+            path: 'detail',
+            loadComponent: () =>
+              import('./feature/teams/team/detail/detail.component').then(
+                (mod) => mod.DetailComponent
+              ),
+          },
+          {
+            path: 'info',
+            loadComponent: () =>
+              import('./feature/teams/team/info/info.component').then(
+                (mod) => mod.InfoComponent
+              ),
+          },
+          {
+            path: '',
+            redirectTo: 'detail',
+            pathMatch: 'full',
+          },
+        ],
       },
     ],
   },

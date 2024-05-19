@@ -1,0 +1,34 @@
+<section class="columns" *ngIf="team">
+  <section class="column is-two-thirds-tablet content">
+    <h1 class="subtitle is-4">{{ team.fields.name }}</h1>
+    <app-rte [rte]="team.fields.description.content"></app-rte>
+
+    <h2 class="subtitle is-5">Officals</h2>
+
+    @for (official of team.fields.officials; track official) {
+    <lib-officials [official]="official"></lib-officials>
+    }
+  </section>
+
+  <section class="column">
+    <lib-ui-figure class="mb-2"></lib-ui-figure>
+
+    <section class="content">
+      <h3 class="subtitle is-5">Our Sponsors</h3>
+      <div class="columns is-multiline is-vcentered">
+        @for (sponsor of team.fields.sponsor; track sponsor) {
+        <div class="column">
+          <a [href]="sponsor.fields.domain" target="_blank">
+            <figure class="image is-64x64">
+              <img
+                [attr.src]="sponsor.fields.logo.fields.file.url"
+                [attr.alt]="sponsor.fields.name"
+              />
+            </figure>
+          </a>
+        </div>
+        }
+      </div>
+    </section>
+  </section>
+</section>

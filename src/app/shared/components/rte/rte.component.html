@@ -1,0 +1,5 @@
+@for (type of rte(); track type) { @if (type.nodeType === 'paragraph') {
+<p [innerHTML]="type.content[0].value"></p>
+} @if (type.nodeType === 'heading-2') {
+<h2 class="subtitle is-5" [innerHTML]="type.content[0].value"></h2>
+} }

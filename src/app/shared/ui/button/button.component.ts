@@ -5,7 +5,7 @@ import {
   input,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TEAMS } from '../../constants/routes.constants';
+import { UNDER, TEAM_URL } from '../../helpers/helpers.year';
 
 @Component({
   selector: 'app-ui-button',
@@ -17,27 +17,13 @@ import { TEAMS } from '../../constants/routes.constants';
 })
 export class UiLibButtonComponent {
   year = input.required<string>();
+  link = input.required<any>();
 
   createUnder = computed(() => {
-    const DATE = new Date();
-    const CURRENT_YEAR = DATE.getFullYear();
-    const CURRENT_MONTH = DATE.getMonth();
-    let under7Year = parseInt(this.year().substring(0, 4), 10);
-    let count = 0;
-
-    while (under7Year < CURRENT_YEAR) {
-      under7Year = under7Year + 1;
-      count++;
-    }
-
-    if (CURRENT_MONTH < 7) {
-      count = count - 1;
-    }
-
-    return `Under ${count + 7}'s`;
+    return UNDER(this.year()).label;
   });
 
   createUnderRouter = computed(() => {
-    return [...TEAMS, this.year()];
+    return TEAM_URL(this.year(), this.link()[0].fields.slug);
   });
 }

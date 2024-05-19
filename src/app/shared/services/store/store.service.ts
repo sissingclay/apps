@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpService } from '../http/http.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map } from 'rxjs';
 import { IValue, YearGroup } from '../http/year-group.interface';
 
 @Injectable({
@@ -8,30 +8,31 @@ import { IValue, YearGroup } from '../http/year-group.interface';
 })
 export class StoreService {
   private _homeData$ = new BehaviorSubject<any>(null);
-  private _yearGroups$ = new BehaviorSubject<YearGroup[]>([]);
+  private _yearGroups$ = new BehaviorSubject<YearGroup | null>(null);
   private _yearGroupsEntries$ = new BehaviorSubject<YearGroup[]>([]);
   private _value$ = new BehaviorSubject<any>([]);
+  private _teams$ = new BehaviorSubject<any>(null);
 
-  get homeData$(): Observable<any> {
+  public get homeData$(): Observable<any> {
     return this._homeData$;
   }
 
-  get yearGroups$(): Observable<YearGroup[]> {
+  public get yearGroups$(): Observable<YearGroup | null> {
     return this._yearGroups$;
   }
 
-  get value$(): Observable<IValue> {
+  public get value$(): Observable<IValue> {
     return this._value$;
   }
 
   private getContentfulData = inject(HttpService);
 
-  getHomeData(): void {
+  public getHomeData(): void {
     this.getContentfulData.getHomeData().subscribe({
       next: (val: any) => {
         const HERO_DATA: any[] = [];
         let heroImage;
-        val.items.forEach((element: any) => {
+        val?.items.forEach((element: any) => {
           element?.fields?.hero?.content.forEach((contents: any) => {
             HERO_DATA.push(contents);
           });
@@ -43,55 +44,137 @@ export class StoreService {
     });
   }
 
-  getYearGroupData(): void {
-    this.getContentfulData.getYearGroupData().subscribe({
-      next: (val: any) => {
-        console.log('getYearGroupData', val);
-        this._yearGroups$.next(val.items);
-        this._yearGroupsEntries$.next(val.includes.Entry);
-      },
-    });
+  public getTeams$(year: string): Observable<any> {
+    return this.yearGroups$.pipe(
+      filter(Boolean),
+      map((res: any) => {
+        return res[year];
+      })
+    );
   }
 
-  getValueData(): void {
-    this.getContentfulData.getValueData().subscribe({
-      next: (val: any) => {
-        console.log('val', val);
-        const VALUE: IValue = {
-          hero: {},
-          list: [],
-        };
+  public getTeam$(slug: string): Observable<any> {
+    return this._teams$.pipe(
+      filter(Boolean),
+      map((teams) => {
+        const TEAM = teams?.items?.filter(
+          (team: any) => team?.fields.slug === slug
+        )?.[0];
 
-        val.items.forEach((value: any) => {
-          const IMAGE = Image(val, value.fields.image.sys);
+        if (TEAM) {
+          const officials = GET_INCLUDES(teams, TEAM.fields.officials);
+          const sponsors = GET_INCLUDES(teams, TEAM.fields.sponsor);
 
-          if (value.metadata.tags[0].sys.id === 'homeHero') {
-            VALUE.hero = {
-              ...value,
-              file: IMAGE,
-            };
-          } else {
-            VALUE.list.push({
-              ...value,
-              file: IMAGE,
+          if (sponsors.length) {
+            sponsors.forEach((sponsor) => {
+              sponsor.fields.logo = GET_INCLUDES(teams, [
+                sponsor.fields.logo,
+              ])?.[0];
             });
           }
-        });
 
-        console.log('VALUE', VALUE);
-        this._value$.next(VALUE);
-      },
-    });
+          TEAM.fields.officials = officials;
+          TEAM.fields.sponsor = sponsors;
+        }
+
+        console.log('TEAM', TEAM);
+
+        return TEAM;
+      })
+    );
   }
 
-  getYearTeamsData(): void {
-    this.getContentfulData.getYearTeamsData().subscribe({
-      next: (val: any) => {
-        console.log('val', val);
-      },
-    });
+  public getYearGroupData(): void {
+    if (!this._yearGroups$.value) {
+      this.getContentfulData.getYearGroupData().subscribe({
+        next: (val: any) => {
+          const TEAMS = setTeam(val);
+          this._yearGroups$.next(TEAMS);
+          this._yearGroupsEntries$.next(val.includes.Entry);
+        },
+      });
+    }
+  }
+
+  public getValueData(): void {
+    this.getContentfulData
+      .getValueData()
+      .pipe(filter(Boolean))
+      .subscribe({
+        next: (val: any) => {
+          const VALUE: IValue = {
+            hero: {},
+            list: [],
+          };
+
+          val?.items?.forEach((value: any) => {
+            const IMAGE = Image(val, value?.fields.image.sys);
+
+            if (value.metadata.tags[0].sys.id === 'homeHero') {
+              VALUE.hero = {
+                ...value,
+                file: IMAGE,
+              };
+            } else {
+              VALUE.list.push({
+                ...value,
+                file: IMAGE,
+              });
+            }
+          });
+
+          this._value$.next(VALUE);
+        },
+      });
+  }
+
+  public getYearTeamsData(): void {
+    if (!this._teams$.value) {
+      this.getContentfulData.getYearTeamsData().subscribe({
+        next: (val: any) => {
+          this._teams$.next(val);
+        },
+      });
+    }
   }
 }
+
+export const GET_INCLUDES = (val: any, details: any[]) => {
+  const INFO: any[] = [];
+  if (Array.isArray(details)) {
+    details.map((detail) => {
+      const INCLUDE_TYPE = detail.sys.linkType
+        ? detail.sys.linkType
+        : detail.sys.type;
+      const TYPE = val.includes[INCLUDE_TYPE];
+      TYPE.forEach((ins: any) => {
+        if (ins.sys.id === detail.sys.id) {
+          INFO.push(ins);
+        }
+      });
+    });
+  }
+
+  return INFO;
+};
+
+export const setTeam = (val: any) => {
+  const TEAMS: any = {};
+  val?.items?.forEach((item: any) => {
+    const FIELDS = item.fields;
+    TEAMS[FIELDS.year] = [];
+
+    FIELDS.teams.forEach((team: any) => {
+      val.includes[team.sys.linkType].forEach((ins: any) => {
+        if (ins.sys.id === team.sys.id) {
+          TEAMS[FIELDS.year].push(ins);
+        }
+      });
+    });
+  });
+
+  return TEAMS;
+};
 
 export const Image = (val: any, sys: any) => {
   let image = {};

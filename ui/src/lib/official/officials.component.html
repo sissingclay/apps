@@ -1,8 +1,9 @@
-<div class="box is-shadowless">
+<div class="is-shadowless">
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
         <img
+          class="is-rounded"
           src="https://bulma.io/assets/images/placeholders/128x128.png"
           alt="Image"
         />
@@ -11,14 +12,20 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>John Smith</strong> <br />
-          <small>johnsmith</small> <small>31m</small>
+          <strong>{{ official().fields.name }}</strong> <br />
+          <small>{{ official().fields.type?.[0] }}</small>
         </p>
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-          efficitur sit amet massa fringilla egestas. Nullam condimentum luctus
-          turpis.
+        <p class="m-0" *ngIf="official().fields.phoneNumbner">
+          <a href="tel:{{ official().fields.phoneNumbner }}"
+            ><small>{{ official().fields.phoneNumbner }}</small></a
+          >
+        </p>
+
+        <p *ngIf="official().fields.emailAddress">
+          <a href="mailto:{{ official().fields.emailAddress }}">
+            <small>{{ official().fields.emailAddress }}</small>
+          </a>
         </p>
       </div>
     </div>

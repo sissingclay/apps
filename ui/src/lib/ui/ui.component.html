@@ -1,7 +1,7 @@
 <nav class="navbar is-dark">
   <div class="container">
     <div class="navbar-brand" [class.spacing]="isActive">
-      <a class="navbar-item" href="/">
+      <a class="navbar-item" [routerLink]="['/']">
         <svg
           width="1"
           height="1"
@@ -35,9 +35,8 @@
       [class.is-active]="isActive"
     >
       <div class="navbar-end">
-        <a class="navbar-item" href="/"> Home </a>
-        <a class="navbar-item" href="/teams"> Teams </a>
-        <a class="navbar-item" href="https://bulma.io/"> Home </a>
+        <a class="navbar-item" [routerLink]="['/']"> Home </a>
+        <a class="navbar-item" [routerLink]="['/teams']"> Teams </a>
       </div>
     </div>
   </div>
