@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve --configuration=production",
-    "build": "nx build --configuration=production",
+    "build": "npx nx run apps:serve:production",
     "test": "nx test"
   },
   "private": true,
