@@ -13,7 +13,7 @@
       <div class="grid">
         @for (figure of value?.list; track figure) {
         <lib-ui-figure [image]="figure?.file?.fields?.file.url" class="cell">
-          {{ figure.fields.details }}
+          {{ figure?.fields?.details }}
         </lib-ui-figure>
         }
       </div>
@@ -29,7 +29,7 @@
         [image]="value.hero?.file?.fields?.file?.url"
         [subtitle]="true"
       >
-        {{ value.hero.fields.details }}
+        {{ value?.hero?.fields?.details }}
       </lib-ui-figure>
     </div>
   </section>
