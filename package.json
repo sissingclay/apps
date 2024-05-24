@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "",
-    "build": "npx nx run apps:serve:production",
+    "start": "npx nx run apps:serve:production",
+    "build": "npx nx run apps:build:production",
     "test": "nx test"
   },
   "private": true,
