@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npx nx run apps:serve:production",
     "build": "npx nx run apps:build:production",
-    "test": "nx test"
+    "test": "nx test",
+    "serve": "node dist/apps/server/server.mjs"
   },
   "private": true,
   "dependencies": {
