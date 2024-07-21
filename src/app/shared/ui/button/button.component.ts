@@ -24,6 +24,6 @@ export class UiLibButtonComponent {
   });
 
   createUnderRouter = computed(() => {
-    return TEAM_URL(this.year(), this.link()[0].fields.slug);
+    return TEAM_URL(this.year(), this.link()[this.year()][0].fields.slug);
   });
 }

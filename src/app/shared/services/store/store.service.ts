@@ -9,12 +9,17 @@ import { IValue, YearGroup } from '../http/year-group.interface';
 export class StoreService {
   private _homeData$ = new BehaviorSubject<any>(null);
   private _yearGroups$ = new BehaviorSubject<YearGroup | null>(null);
+  private _yearGroupsOrdered$ = new BehaviorSubject<string[]>([]);
   private _yearGroupsEntries$ = new BehaviorSubject<YearGroup[]>([]);
   private _value$ = new BehaviorSubject<any>([]);
   private _teams$ = new BehaviorSubject<any>(null);
 
   public get homeData$(): Observable<any> {
     return this._homeData$;
+  }
+
+  public get yearGroupsOrdered$(): Observable<string[]> {
+    return this._yearGroupsOrdered$;
   }
 
   public get yearGroups$(): Observable<YearGroup | null> {
@@ -89,6 +94,17 @@ export class StoreService {
       this.getContentfulData.getYearGroupData().subscribe({
         next: (val: any) => {
           const TEAMS = setTeam(val);
+          const SORTED = Object.keys(TEAMS).sort((a: any, b: any) => {
+            if (a < b) {
+              return 1;
+            }
+            if (a > b) {
+              return -1;
+            }
+
+            return 0;
+          });
+          this._yearGroupsOrdered$.next(SORTED);
           this._yearGroups$.next(TEAMS);
           this._yearGroupsEntries$.next(val.includes.Entry);
         },

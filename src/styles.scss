@@ -44,13 +44,13 @@ $white: #ffffff;
 }
 
 .img {
-  box-shadow: 22px 20px 0px -3px rgba(1, 87, 255, 1);
+  box-shadow: 16px 14px 0px -3px rgba(1, 87, 255, 1);
 
   &.--secondary {
-    box-shadow: 22px 20px 0px -3px rgba(177, 227, 255, 1);
+    box-shadow: 16px 14px 0px -3px rgba(177, 227, 255, 1);
   }
 
   &.--tertiary {
-    box-shadow: 22px 20px 0px -3px rgba(31, 39, 59, 1);
+    box-shadow: 16px 14px 0px -3px rgba(31, 39, 59, 1);
   }
 }

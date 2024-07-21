@@ -19,7 +19,10 @@
         <ul class="menu-list">
           @for (team of storeService.getTeams$(year) | async; track team) {
           <li>
-            <a [routerLink]="createUnderRouter(team.fields.slug)">
+            <a
+              [routerLink]="createUnderRouter(team.fields.slug)"
+              [routerLinkActive]="'active'"
+            >
               {{ team.fields.name }}
             </a>
           </li>

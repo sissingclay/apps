@@ -21,10 +21,16 @@
       </section>
 
       <section class="column is-8">
-        <div class="is-flex is-justify-content-end">
+        <div class="is-flex is-justify-content-end is-relative">
           <img
             [src]="homeData.heroImage?.fields?.file?.url"
+            [alt]="homeData.heroImage?.fields?.title"
             class="img image"
+          />
+          <img
+            src="./../../../../assets/img/tactics.png"
+            class="tactics"
+            aria-hidden="true"
           />
         </div>
       </section>
