@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { UiAppBarComponent, UiLibFigureComponent } from '@apps/ui';
+import { IMenu, UiAppBarComponent, UiLibFigureComponent } from '@apps/ui';
+import { HttpService } from './shared/services/http/http.service';
 
 @Component({
   standalone: true,
@@ -15,4 +16,23 @@ import { UiAppBarComponent, UiLibFigureComponent } from '@apps/ui';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  public httpService = inject(HttpService);
+  public menuLists!: IMenu[];
+
+  ngOnInit(): void {
+    this.httpService.getPageData().subscribe({
+      next: (data: any) => {
+        const topMenu: IMenu[] = [];
+        console.log('data', data);
+        data.items.forEach((item: any) => {
+          if (item.fields.topLevel) {
+            topMenu.push(item);
+          }
+        });
+
+        this.menuLists = topMenu;
+      },
+    });
+  }
+}

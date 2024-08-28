@@ -1,16 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ROOT, TEAMS } from '../constants/routes.constants';
+import { NgFor } from '@angular/common';
+
+export interface IMenu {
+  fields: IMenuData;
+}
+
+export interface IMenuData {
+  slug: string;
+  title: string;
+}
 
 @Component({
   selector: 'lib-ui-app-bar',
   standalone: true,
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.scss',
-  imports: [RouterLink],
+  imports: [RouterLink, NgFor],
 })
 export class UiAppBarComponent {
+  @Input() menuLists!: IMenu[];
+
   public isActive = false;
+
   public routesLinks = {
     home: ROOT,
     teams: TEAMS,

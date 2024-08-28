@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -21,6 +21,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideRouter(appRoutes, inMemoryScrollingFeature),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
   ],
 };

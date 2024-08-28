@@ -30,4 +30,8 @@ export class HttpService {
   public getYearTeamsData() {
     return this.http.get(`${this.configService.api_url}&content_type=team`);
   }
+
+  public getPageData() {
+    return this.http.get(`${this.configService.api_url}&content_type=page`);
+  }
 }

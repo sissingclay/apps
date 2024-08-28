@@ -57,4 +57,9 @@ export const appRoutes: Route[] = [
       },
     ],
   },
+  {
+    path: ':page',
+    loadComponent: () =>
+      import('./feature/home/home.component').then((mod) => mod.HomeComponent),
+  },
 ];
