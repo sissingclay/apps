@@ -1,16 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { OfficialsComponent, UiLibFigureComponent } from '@apps/ui';
 import { UiLibButtonComponent } from '../../../shared/ui/button/button.component';
 import { StoreService } from '../../../shared/services/store/store.service';
 import {
   ActivatedRoute,
-  NavigationEnd,
-  Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
@@ -19,7 +12,6 @@ import { AsyncPipe } from '@angular/common';
 import { TEAM_URL, UNDER } from '../../../shared/helpers/helpers.year';
 import { TEAMS } from '@apps/ui';
 import { DestroyService } from '../../../shared/services/destroy/destroy.service';
-import { filter, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-team',
@@ -35,7 +27,6 @@ import { filter, takeUntil } from 'rxjs';
   ],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamComponent extends DestroyService implements OnInit {
   public year = '';

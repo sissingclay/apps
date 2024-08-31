@@ -8,7 +8,7 @@ import { StoreService } from '../../../shared/services/store/store.service';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { TEAMS } from '@apps/ui';
+import { ABOUT_US, TEAMS } from '@apps/ui';
 
 @Component({
   selector: 'app-ui-hero',
@@ -20,6 +20,7 @@ import { TEAMS } from '@apps/ui';
 })
 export class UiLibHeroComponent implements OnInit {
   public readonly routeTeam = TEAMS;
+  public readonly routeAbout = ABOUT_US;
 
   public storeService = inject(StoreService);
 

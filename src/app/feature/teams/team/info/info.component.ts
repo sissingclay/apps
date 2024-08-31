@@ -19,7 +19,6 @@ import { TEAMS } from '@apps/ui';
   ],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoComponent {
   public year = '';

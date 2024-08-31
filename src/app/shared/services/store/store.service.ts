@@ -13,6 +13,7 @@ export class StoreService {
   private _yearGroupsEntries$ = new BehaviorSubject<YearGroup[]>([]);
   private _value$ = new BehaviorSubject<any>([]);
   private _teams$ = new BehaviorSubject<any>(null);
+  private _entryData$ = new BehaviorSubject({});
 
   public get homeData$(): Observable<any> {
     return this._homeData$;
@@ -28,6 +29,10 @@ export class StoreService {
 
   public get value$(): Observable<IValue> {
     return this._value$;
+  }
+
+  public get entry$(): Observable<any> {
+    return this._entryData$;
   }
 
   private getContentfulData = inject(HttpService);
@@ -81,8 +86,6 @@ export class StoreService {
           TEAM.fields.officials = officials;
           TEAM.fields.sponsor = sponsors;
         }
-
-        console.log('TEAM', TEAM);
 
         return TEAM;
       })
@@ -152,6 +155,14 @@ export class StoreService {
         },
       });
     }
+  }
+
+  public getEntryData(entryId: string): void {
+    this.getContentfulData.getEntryData(entryId).subscribe({
+      next: (data) => {
+        this._entryData$.next({ ...this._entryData$.value, entryId: data });
+      },
+    });
   }
 }
 

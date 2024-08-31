@@ -8,7 +8,7 @@ export interface IMenu {
 }
 
 export interface IMenuData {
-  slug: string;
+  url: string;
   title: string;
 }
 

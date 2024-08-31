@@ -15,6 +15,7 @@ export class OfficialsComponent {
       emailAddress?: string;
       phoneNumbner?: string;
       type?: string[];
+      image?: string;
     };
   }>();
 }

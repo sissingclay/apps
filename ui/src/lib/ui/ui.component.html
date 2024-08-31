@@ -37,8 +37,8 @@
       <div class="navbar-end">
         <a class="navbar-item" [routerLink]="routesLinks.home">Home </a>
         <a class="navbar-item" [routerLink]="routesLinks.teams">Teams</a>
-        @for (menu of menuLists; track menu.fields.slug) {
-        <a class="navbar-item" [routerLink]="menu.fields.slug">
+        @for (menu of menuLists; track menu.fields.url) {
+        <a class="navbar-item" [routerLink]="menu.fields.url">
           {{ menu.fields.title }}
         </a>
         }

@@ -21,12 +21,13 @@ export class AppComponent implements OnInit {
   public menuLists!: IMenu[];
 
   ngOnInit(): void {
-    this.httpService.getPageData().subscribe({
+    this.httpService.getMenuData().subscribe({
       next: (data: any) => {
         const topMenu: IMenu[] = [];
         console.log('data', data);
         data.items.forEach((item: any) => {
-          if (item.fields.topLevel) {
+
+          if (!item.fields.parent) {
             topMenu.push(item);
           }
         });

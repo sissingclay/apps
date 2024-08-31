@@ -14,7 +14,6 @@ import { AsyncPipe, JsonPipe, KeyValuePipe } from '@angular/common';
   imports: [UiLibButtonComponent, AsyncPipe, KeyValuePipe, JsonPipe],
   templateUrl: './teams.component.html',
   styleUrl: './teams.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTeamsWidgetComponent implements OnInit {
   public storeService = inject(StoreService);

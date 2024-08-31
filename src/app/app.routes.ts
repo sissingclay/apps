@@ -58,8 +58,17 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'about-us',
+    loadComponent: () =>
+      import('./feature/about-us/about-us.component').then(
+        (mod) => mod.AboutUsComponent
+      ),
+  },
+  {
     path: ':page',
     loadComponent: () =>
-      import('./feature/home/home.component').then((mod) => mod.HomeComponent),
+      import('./shared/components/page/page.component').then(
+        (mod) => mod.PageComponent
+      ),
   },
 ];

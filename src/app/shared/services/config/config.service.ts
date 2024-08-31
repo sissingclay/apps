@@ -13,4 +13,8 @@ export class ConfigService {
     entries: 'entries',
   };
   public readonly api_url = `${this.config.domain}/spaces/${this.config.clientId}/environments/${this.config.environments}/entries?access_token=${this.config.access_token}`;
+
+  getEntry(entryId: string) {
+    return `${this.config.domain}/spaces/${this.config.clientId}/environments/${this.config.environments}/entries/${entryId}?access_token=${this.config.access_token}`;
+  }
 }

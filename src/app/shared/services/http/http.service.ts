@@ -31,7 +31,17 @@ export class HttpService {
     return this.http.get(`${this.configService.api_url}&content_type=team`);
   }
 
-  public getPageData() {
-    return this.http.get(`${this.configService.api_url}&content_type=page`);
+  public getMenuData() {
+    return this.http.get(`${this.configService.api_url}&content_type=menu`);
+  }
+
+  public getPageData(entryId: string) {
+    return this.http.get(
+      `${this.configService.api_url}&content_type=page&fields.slug=${entryId}`
+    );
+  }
+
+  public getEntryData(entryId: string) {
+    return this.http.get(this.configService.getEntry(entryId));
   }
 }
