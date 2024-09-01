@@ -2,15 +2,7 @@
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img
-          class="is-rounded"
-          [src]="
-            official().fields?.image
-              ? ''
-              : 'https://bulma.io/assets/images/placeholders/128x128.png'
-          "
-          alt="Image"
-        />
+        <img class="is-rounded" [src]="image" [alt]="official().fields.name" />
       </figure>
     </div>
     <div class="media-content">
@@ -20,14 +12,17 @@
           <small>{{ official().fields.type?.[0] }}</small>
         </p>
 
-        <p class="m-0" *ngIf="official().fields.phoneNumbner">
-          <a href="tel:{{ official().fields.phoneNumbner }}"
-            ><small>{{ official().fields.phoneNumbner }}</small></a
+        <p class="m-0" *ngIf="official().fields.phoneNumber">
+          <a href="tel:{{ official().fields.phoneNumber }}"
+            ><small>{{ official().fields.phoneNumber }}</small></a
           >
         </p>
 
         <p *ngIf="official().fields.emailAddress">
-          <a href="mailto:{{ official().fields.emailAddress }}">
+          <a
+            class="has-text-primary"
+            href="mailto:{{ official().fields.emailAddress }}"
+          >
             <small>{{ official().fields.emailAddress }}</small>
           </a>
         </p>

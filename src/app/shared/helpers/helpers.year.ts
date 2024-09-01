@@ -19,9 +19,4 @@ export const UNDER = (year: string) => {
   return { label: `Under ${count + 7}'s`, slug: `under-${count + 7}` };
 };
 
-export const TEAM_URL = (year: string, slug: string) => [
-  ...TEAMS,
-  year,
-  slug,
-  'detail',
-];
+export const TEAM_URL = (year: string, slug: string) => [...TEAMS, year, slug];

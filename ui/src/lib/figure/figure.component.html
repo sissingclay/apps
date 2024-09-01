@@ -1,5 +1,13 @@
 <figure>
-  <img [src]="sanitizeImageUrl()" class="img mb-6 secondary" />
+  <div class="is-relative">
+    <img [src]="sanitizeImageUrl()" class="img mb-6 secondary" />
+    <img
+      src="./../../../../assets/img/tactics.png"
+      class="tactics"
+      aria-hidden="true"
+    />
+  </div>
+
   <figcaption
     class="subtitle"
     [class.is-3]="subtitle()"

@@ -15,6 +15,9 @@ export class StoreService {
   private _teams$ = new BehaviorSubject<any>(null);
   private _entryData$ = new BehaviorSubject({});
 
+  teamSlug$ = new BehaviorSubject('');
+  year!: string;
+
   public get homeData$(): Observable<any> {
     return this._homeData$;
   }
@@ -71,9 +74,17 @@ export class StoreService {
           (team: any) => team?.fields.slug === slug
         )?.[0];
 
+        console.log('TEAM', TEAM);
+        console.log('teams', teams);
+
         if (TEAM) {
           const officials = GET_INCLUDES(teams, TEAM.fields.officials);
           const sponsors = GET_INCLUDES(teams, TEAM.fields.sponsor);
+          const image = teams.includes.Asset.find(
+            (asset: any) => asset?.sys?.id === TEAM.fields?.image?.sys?.id
+          );
+
+          console.log('image', image);
 
           if (sponsors.length) {
             sponsors.forEach((sponsor) => {
@@ -85,6 +96,7 @@ export class StoreService {
 
           TEAM.fields.officials = officials;
           TEAM.fields.sponsor = sponsors;
+          TEAM.fields.image = image;
         }
 
         return TEAM;
@@ -151,6 +163,7 @@ export class StoreService {
     if (!this._teams$.value) {
       this.getContentfulData.getYearTeamsData().subscribe({
         next: (val: any) => {
+          console.log('val', val);
           this._teams$.next(val);
         },
       });

@@ -1,6 +1,5 @@
 <section class="columns" *ngIf="team">
   <section class="column is-two-thirds-tablet content">
-    <h1 class="subtitle is-4">{{ team.fields.name }}</h1>
     <app-rte [rte]="team.fields.description.content"></app-rte>
 
     <h2 class="subtitle is-5">Officals</h2>
@@ -11,7 +10,13 @@
   </section>
 
   <section class="column">
-    <lib-ui-figure class="mb-2"></lib-ui-figure>
+    <lib-ui-figure
+      *ngIf="team?.fields?.image?.fields?.file?.url"
+      [image]="team?.fields?.image?.fields?.file?.url"
+      class="mb-2"
+    >
+      {{ team?.fields?.image?.fields?.file?.title }}
+    </lib-ui-figure>
 
     <section class="content">
       <h3 class="subtitle is-5">Our Sponsors</h3>

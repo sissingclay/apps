@@ -14,9 +14,9 @@ export class UiLibFigureComponent {
   background = input<'secondary' | 'tertiary'>();
   image = input<string>('');
 
-  sanitizeImageUrl = computed(() => {
+  sanitizeImageUrl() {
     return this.sanitizer.bypassSecurityTrustUrl(this.image());
-  });
+  }
 
   private sanitizer = inject(DomSanitizer);
 }

@@ -17,13 +17,14 @@
       <aside class="menu">
         <p class="menu-label">Team(s)</p>
         <ul class="menu-list">
-          @for (team of storeService.getTeams$(year) | async; track team) {
+          @for (yearTeam of storeService.getTeams$(year) | async; track
+          yearTeam) {
           <li>
             <a
-              [routerLink]="createUnderRouter(team.fields.slug)"
-              [routerLinkActive]="'active'"
+              [routerLink]="createUnderRouter(yearTeam.fields.slug)"
+              [routerLinkActive]="'is-active'"
             >
-              {{ team.fields.name }}
+              {{ yearTeam.fields.name }}
             </a>
           </li>
           }
@@ -32,6 +33,12 @@
     </section>
 
     <section class="column">
+      <section class="columns m-0">
+        <section class="column content">
+          <h1>{{ team?.fields?.name }}</h1>
+        </section>
+      </section>
+
       <div class="tabs mb-6">
         <ul>
           <li routerLinkActive="is-active">
@@ -54,7 +61,6 @@
       </div>
 
       <section class="columns m-0">
-        <h1></h1>
         <router-outlet></router-outlet>
       </section>
     </section>

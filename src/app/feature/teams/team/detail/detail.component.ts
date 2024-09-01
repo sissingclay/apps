@@ -57,6 +57,8 @@ export class DetailComponent extends DestroyService implements OnInit {
   private loadData(): void {
     this.year = this.route.parent?.snapshot?.params['under'];
     this.teamSlug = this.route.parent?.snapshot?.params['team'];
+    this.storeService.year = this.year;
+    this.storeService.teamSlug$.next(this.teamSlug);
 
     this.storeService
       .getTeam$(this.teamSlug)

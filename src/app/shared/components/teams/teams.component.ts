@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { StoreService } from '../../services/store/store.service';
 import { UiLibButtonComponent } from '../../ui/button/button.component';
 import { AsyncPipe, JsonPipe, KeyValuePipe } from '@angular/common';

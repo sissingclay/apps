@@ -22,6 +22,7 @@ export class AboutUsComponent implements OnInit {
   private storeService = inject(StoreService);
   private test = inject(HttpService);
   officials: any;
+  assets!: any[];
 
   ngOnInit(): void {
     this.storeService.getEntryData('17Td148B65KusnECBM37Mt');
@@ -29,6 +30,7 @@ export class AboutUsComponent implements OnInit {
       next: (data: any) => {
         console.log('data', data);
         this.officials = data?.includes?.Entry;
+        this.assets = data?.includes?.Asset;
       },
     });
 
