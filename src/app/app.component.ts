@@ -24,9 +24,8 @@ export class AppComponent implements OnInit {
     this.httpService.getMenuData().subscribe({
       next: (data: any) => {
         const topMenu: IMenu[] = [];
-        console.log('data', data);
+        console.log('menu', data);
         data.items.forEach((item: any) => {
-
           if (!item.fields.parent) {
             topMenu.push(item);
           }

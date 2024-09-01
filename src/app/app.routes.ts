@@ -65,6 +65,13 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'our-mission',
+    loadComponent: () =>
+      import('./feature/mission/mission.component').then(
+        (mod) => mod.MissionComponent
+      ),
+  },
+  {
     path: ':page',
     loadComponent: () =>
       import('./shared/components/page/page.component').then(

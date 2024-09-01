@@ -5,13 +5,14 @@ import {
   inject,
 } from '@angular/core';
 
-import { UiLibFigureComponent } from '@apps/ui';
+import { MISSION, UiLibFigureComponent } from '@apps/ui';
 import { StoreService } from '../../shared/services/store/store.service';
 import { UiLibHeroComponent } from './hero/hero.component';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { UiLibButtonComponent } from '../../shared/ui/button/button.component';
 import { AppTeamsWidgetComponent } from '../../shared/components/teams/teams.component';
 import { HttpService } from '../../shared/services/http/http.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ import { HttpService } from '../../shared/services/http/http.service';
     AppTeamsWidgetComponent,
     AsyncPipe,
     NgIf,
+    RouterLink,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -32,6 +34,7 @@ import { HttpService } from '../../shared/services/http/http.service';
 })
 export class HomeComponent implements OnInit {
   public storeService = inject(StoreService);
+  ourMission = MISSION;
 
   ngOnInit(): void {
     this.storeService.getYearGroupData();
