@@ -25,14 +25,6 @@ export class UiLibHeroComponent implements OnInit {
   public storeService = inject(StoreService);
 
   ngOnInit(): void {
-    this.storeService.homeData$
-      .pipe(
-        tap((res) => {
-          if (!res) {
-            this.storeService.getHomeData();
-          }
-        })
-      )
-      .subscribe();
+    this.storeService.getHomeData();
   }
 }

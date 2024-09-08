@@ -26,32 +26,29 @@ export const appRoutes: Route[] = [
           import('./feature/teams/team/team.component').then(
             (mod) => mod.TeamComponent
           ),
-      },
-      {
-        path: ':under/:team',
-        loadComponent: () =>
-          import('./feature/teams/team/team.component').then(
-            (mod) => mod.TeamComponent
-          ),
         children: [
           {
-            path: 'detail',
+            path: ':team',
             loadComponent: () =>
-              import('./feature/teams/team/detail/detail.component').then(
-                (mod) => mod.DetailComponent
-              ),
-          },
-          {
-            path: 'info',
-            loadComponent: () =>
-              import('./feature/teams/team/info/info.component').then(
-                (mod) => mod.InfoComponent
-              ),
-          },
-          {
-            path: '',
-            redirectTo: 'detail',
-            pathMatch: 'full',
+              import(
+                './feature/teams/team/team-template/team-template.component'
+              ).then((mod) => mod.TeamTemplateComponent),
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('./feature/teams/team/detail/detail.component').then(
+                    (mod) => mod.DetailComponent
+                  ),
+              },
+              {
+                path: 'info',
+                loadComponent: () =>
+                  import('./feature/teams/team/info/info.component').then(
+                    (mod) => mod.InfoComponent
+                  ),
+              },
+            ],
           },
         ],
       },
@@ -69,13 +66,6 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./feature/mission/mission.component').then(
         (mod) => mod.MissionComponent
-      ),
-  },
-  {
-    path: ':page',
-    loadComponent: () =>
-      import('./shared/components/page/page.component').then(
-        (mod) => mod.PageComponent
       ),
   },
 ];

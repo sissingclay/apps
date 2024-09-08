@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UNDER, TEAM_URL } from '../../helpers/helpers.year';
+import { YearGroupCollection } from '../../interface/teams.interface';
 
 @Component({
   selector: 'app-ui-button',
@@ -16,14 +17,16 @@ import { UNDER, TEAM_URL } from '../../helpers/helpers.year';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiLibButtonComponent {
-  year = input.required<string>();
-  link = input.required<any>();
+  year = input.required<YearGroupCollection>();
 
   createUnder = computed(() => {
-    return UNDER(this.year()).label;
+    return UNDER(this.year().year);
   });
 
   createUnderRouter = computed(() => {
-    return TEAM_URL(this.year(), this.link()[this.year()][0].fields.slug);
+    return TEAM_URL(
+      this.year().year,
+      this.year().teamsCollection.items[0].slug
+    );
   });
 }

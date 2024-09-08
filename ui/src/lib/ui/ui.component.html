@@ -35,10 +35,24 @@
       [class.is-active]="isActive"
     >
       <div class="navbar-end">
-        <a class="navbar-item" [routerLink]="routesLinks.home">Home </a>
-        <a class="navbar-item" [routerLink]="routesLinks.teams">Teams</a>
+        <a
+          class="navbar-item"
+          [routerLink]="routesLinks.home"
+          [routerLinkActive]="'is-active'"
+          >Home
+        </a>
+        <a
+          class="navbar-item"
+          [routerLink]="routesLinks.teams"
+          [routerLinkActive]="'is-active'"
+          >Teams</a
+        >
         @for (menu of menuLists; track menu.fields.url) {
-        <a class="navbar-item" [routerLink]="menu.fields.url">
+        <a
+          class="navbar-item"
+          [routerLink]="menu.fields.url"
+          [routerLinkActive]="'is-active'"
+        >
           {{ menu.fields.title }}
         </a>
         }

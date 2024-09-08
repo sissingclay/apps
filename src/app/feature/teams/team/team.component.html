@@ -3,7 +3,7 @@
     <div
       class="hero-body is-flex is-justify-content-space-between is-align-content-center is-align-items-center"
     >
-      <h1 class="title">{{ under.label }}</h1>
+      <h1 class="title">{{ yearData.label }}</h1>
       <p class="subtitle">
         <a [routerLink]="TEAMS_URL">Back to Our Teams</a>
       </p>
@@ -17,14 +17,13 @@
       <aside class="menu">
         <p class="menu-label">Team(s)</p>
         <ul class="menu-list">
-          @for (yearTeam of storeService.getTeams$(year) | async; track
-          yearTeam) {
+          @for (teams of storeService.teams$ | async; track teams) {
           <li>
             <a
-              [routerLink]="createUnderRouter(yearTeam.fields.slug)"
+              [routerLink]="createUnderRouter(teams.slug)"
               [routerLinkActive]="'is-active'"
             >
-              {{ yearTeam.fields.name }}
+              {{ teams.name }}
             </a>
           </li>
           }
@@ -34,26 +33,30 @@
 
     <section class="column">
       <section class="columns m-0">
-        <section class="column content">
-          <h1>{{ team?.fields?.name }}</h1>
+        <section
+          class="column content"
+          *ngIf="storeService.team$ | async as team"
+        >
+          <h1>{{ team?.name }}</h1>
         </section>
       </section>
 
       <div class="tabs mb-6">
-        <ul>
+        <ul *ngIf="storeService.team$ | async as team">
           <li routerLinkActive="is-active">
-            <a [routerLink]="['detail']">
-              <span class="icon is-small"
-                ><i class="fas fa-image" aria-hidden="true"></i
-              ></span>
+            <a [routerLink]="createUnderRouter(team.slug)">
+              <span class="icon is-small">
+                <i class="fas fa-image" aria-hidden="true"></i>
+              </span>
               <span>Team Info</span>
             </a>
           </li>
+
           <li routerLinkActive="is-active">
-            <a [routerLink]="['info']">
-              <span class="icon is-small"
-                ><i class="fas fa-image" aria-hidden="true"></i
-              ></span>
+            <a [routerLink]="createUnderRouter(team.slug, 'info')">
+              <span class="icon is-small">
+                <i class="fas fa-image" aria-hidden="true"></i>
+              </span>
               <span>Fees</span>
             </a>
           </li>

@@ -1,19 +1,37 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpService } from '../http/http.service';
-import { BehaviorSubject, Observable, filter, map } from 'rxjs';
-import { IValue, YearGroup } from '../http/year-group.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import { GET_HOME_HERO } from '../graphql/graphql.home.queries';
+import { HomeCollection } from '../../interface/home.interface';
+import {
+  GET_PAGE,
+  GET_TEAM,
+  GET_YEAR_GROUPS,
+  GET_YEAR_TEAMS,
+} from '../graphql/graphql.teams.queries';
+import {
+  Team,
+  TeamCollection,
+  YearGroupCollection,
+} from '../../interface/teams.interface';
+import { PageData, Value } from '../../interface/page.interface';
+import { GET_VALUE } from '../graphql/graphql.value.queries';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  private _homeData$ = new BehaviorSubject<any>(null);
-  private _yearGroups$ = new BehaviorSubject<YearGroup | null>(null);
-  private _yearGroupsOrdered$ = new BehaviorSubject<string[]>([]);
-  private _yearGroupsEntries$ = new BehaviorSubject<YearGroup[]>([]);
-  private _value$ = new BehaviorSubject<any>([]);
-  private _teams$ = new BehaviorSubject<any>(null);
-  private _entryData$ = new BehaviorSubject({});
+  private _homeData$ = new BehaviorSubject<HomeCollection | undefined>(
+    undefined
+  );
+  private _yearGroups$ = new BehaviorSubject<YearGroupCollection[]>([]);
+  private _teams$ = new BehaviorSubject<TeamCollection[]>([]);
+  private _team$ = new BehaviorSubject<Team | null>(null);
+  private _page$ = new BehaviorSubject<PageData | null>(null);
+  private _valueData$ = new BehaviorSubject<Value[] | null>(null);
+  private _valueHeroData$ = new BehaviorSubject<Value[] | null>(null);
+
+  private apollo = inject(Apollo);
 
   teamSlug$ = new BehaviorSubject('');
   year!: string;
@@ -22,207 +40,118 @@ export class StoreService {
     return this._homeData$;
   }
 
-  public get yearGroupsOrdered$(): Observable<string[]> {
-    return this._yearGroupsOrdered$;
-  }
-
-  public get yearGroups$(): Observable<YearGroup | null> {
+  public get yearGroups$(): Observable<YearGroupCollection[]> {
     return this._yearGroups$;
   }
 
-  public get value$(): Observable<IValue> {
-    return this._value$;
+  public get valueData$(): Observable<Value[] | null> {
+    return this._valueData$;
   }
 
-  public get entry$(): Observable<any> {
-    return this._entryData$;
+  public get valueHeroData$(): Observable<Value[] | null> {
+    return this._valueHeroData$;
   }
 
-  private getContentfulData = inject(HttpService);
+  public get teams$(): Observable<TeamCollection[]> {
+    return this._teams$;
+  }
+
+  public get team$(): Observable<Team | null> {
+    return this._team$;
+  }
+
+  public get page$(): Observable<PageData | null> {
+    return this._page$;
+  }
 
   public getHomeData(): void {
-    this.getContentfulData.getHomeData().subscribe({
-      next: (val: any) => {
-        const HERO_DATA: any[] = [];
-        let heroImage;
-        val?.items.forEach((element: any) => {
-          element?.fields?.hero?.content.forEach((contents: any) => {
-            HERO_DATA.push(contents);
-          });
-          heroImage = Image(val, element?.fields?.heroImage);
+    if (!this._homeData$?.value) {
+      this.apollo
+        .watchQuery({
+          query: GET_HOME_HERO,
+        })
+        .valueChanges.subscribe(({ data, error }: any) => {
+          this._homeData$.next(data);
         });
-
-        this._homeData$.next({ heroData: HERO_DATA, heroImage });
-      },
-    });
+    }
   }
 
-  public getTeams$(year: string): Observable<any> {
-    return this.yearGroups$.pipe(
-      filter(Boolean),
-      map((res: any) => {
-        return res[year];
+  public getTeams(year: Date): void {
+    this.apollo
+      .watchQuery({
+        query: GET_YEAR_TEAMS,
+        variables: {
+          where: {
+            yearGroup: {
+              year: year.toISOString(),
+            },
+          },
+        },
       })
-    );
+      .valueChanges.subscribe(({ data, error }: any) => {
+        this._teams$.next(data.teamCollection.items);
+      });
   }
 
-  public getTeam$(slug: string): Observable<any> {
-    return this._teams$.pipe(
-      filter(Boolean),
-      map((teams) => {
-        const TEAM = teams?.items?.filter(
-          (team: any) => team?.fields.slug === slug
-        )?.[0];
-
-        console.log('TEAM', TEAM);
-        console.log('teams', teams);
-
-        if (TEAM) {
-          const officials = GET_INCLUDES(teams, TEAM.fields.officials);
-          const sponsors = GET_INCLUDES(teams, TEAM.fields.sponsor);
-          const image = teams.includes.Asset.find(
-            (asset: any) => asset?.sys?.id === TEAM.fields?.image?.sys?.id
-          );
-
-          console.log('image', image);
-
-          if (sponsors.length) {
-            sponsors.forEach((sponsor) => {
-              sponsor.fields.logo = GET_INCLUDES(teams, [
-                sponsor.fields.logo,
-              ])?.[0];
-            });
-          }
-
-          TEAM.fields.officials = officials;
-          TEAM.fields.sponsor = sponsors;
-          TEAM.fields.image = image;
-        }
-
-        return TEAM;
+  public getTeam(slug: string): void {
+    this.apollo
+      .watchQuery({
+        query: GET_TEAM,
+        variables: {
+          where: {
+            slug,
+          },
+          limit: 1,
+        },
       })
-    );
+      .valueChanges.subscribe(({ data, error }: any) => {
+        this._team$.next(data.teamCollection.items[0]);
+      });
   }
 
   public getYearGroupData(): void {
-    if (!this._yearGroups$.value) {
-      this.getContentfulData.getYearGroupData().subscribe({
-        next: (val: any) => {
-          const TEAMS = setTeam(val);
-          const SORTED = Object.keys(TEAMS).sort((a: any, b: any) => {
-            if (a < b) {
-              return 1;
-            }
-            if (a > b) {
-              return -1;
-            }
-
-            return 0;
-          });
-          this._yearGroupsOrdered$.next(SORTED);
-          this._yearGroups$.next(TEAMS);
-          this._yearGroupsEntries$.next(val.includes.Entry);
-        },
-      });
+    if (!this._yearGroups$?.value.length) {
+      this.apollo
+        .watchQuery({
+          query: GET_YEAR_GROUPS,
+          variables: {
+            order: 'year_DESC',
+          },
+        })
+        .valueChanges.subscribe(({ data, error }: any) => {
+          this._yearGroups$.next(data.yearGroupCollection.items);
+        });
     }
+  }
+
+  public getPageData(slug: string): void {
+    this.apollo
+      .watchQuery({
+        query: GET_PAGE,
+        variables: {
+          where: {
+            slug,
+          },
+          limit: 1,
+        },
+      })
+      .valueChanges.subscribe(({ data, error }: any) => {
+        this._page$.next(data.pageCollection.items[0]);
+      });
   }
 
   public getValueData(): void {
-    this.getContentfulData
-      .getValueData()
-      .pipe(filter(Boolean))
-      .subscribe({
-        next: (val: any) => {
-          const VALUE: IValue = {
-            hero: {},
-            list: [],
-          };
-
-          val?.items?.forEach((value: any) => {
-            const IMAGE = Image(val, value?.fields.image.sys);
-
-            if (value.metadata.tags[0].sys.id === 'homeHero') {
-              VALUE.hero = {
-                ...value,
-                file: IMAGE,
-              };
-            } else {
-              VALUE.list.push({
-                ...value,
-                file: IMAGE,
-              });
-            }
-          });
-
-          this._value$.next(VALUE);
-        },
+    this.apollo
+      .watchQuery({
+        query: GET_VALUE,
+      })
+      .valueChanges.subscribe(({ data, error }: any) => {
+        if (data?.valueCollection?.items?.length) {
+          const DATA = [...data.valueCollection.items];
+          DATA.shift();
+          this._valueHeroData$.next([data?.valueCollection?.items[0]]);
+          this._valueData$.next(DATA);
+        }
       });
-  }
-
-  public getYearTeamsData(): void {
-    if (!this._teams$.value) {
-      this.getContentfulData.getYearTeamsData().subscribe({
-        next: (val: any) => {
-          console.log('val', val);
-          this._teams$.next(val);
-        },
-      });
-    }
-  }
-
-  public getEntryData(entryId: string): void {
-    this.getContentfulData.getEntryData(entryId).subscribe({
-      next: (data) => {
-        this._entryData$.next({ ...this._entryData$.value, entryId: data });
-      },
-    });
   }
 }
-
-export const GET_INCLUDES = (val: any, details: any[]) => {
-  const INFO: any[] = [];
-  if (Array.isArray(details)) {
-    details.map((detail) => {
-      const INCLUDE_TYPE = detail.sys.linkType
-        ? detail.sys.linkType
-        : detail.sys.type;
-      const TYPE = val.includes[INCLUDE_TYPE];
-      TYPE.forEach((ins: any) => {
-        if (ins.sys.id === detail.sys.id) {
-          INFO.push(ins);
-        }
-      });
-    });
-  }
-
-  return INFO;
-};
-
-export const setTeam = (val: any) => {
-  const TEAMS: any = {};
-  val?.items?.forEach((item: any) => {
-    const FIELDS = item.fields;
-    TEAMS[FIELDS.year] = [];
-
-    FIELDS.teams.forEach((team: any) => {
-      val.includes[team.sys.linkType].forEach((ins: any) => {
-        if (ins.sys.id === team.sys.id) {
-          TEAMS[FIELDS.year].push(ins);
-        }
-      });
-    });
-  });
-
-  return TEAMS;
-};
-
-export const Image = (val: any, sys: any) => {
-  let image = {};
-  val.includes.Asset.forEach((asset: any) => {
-    if (asset.id === sys.id || asset.sys.id === sys.id) {
-      image = asset;
-    }
-  });
-
-  return image;
-};

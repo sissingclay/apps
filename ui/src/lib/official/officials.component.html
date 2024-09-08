@@ -2,28 +2,32 @@
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img class="is-rounded" [src]="image" [alt]="official().fields.name" />
+        <img
+          class="is-rounded"
+          [src]="official().image ? official().image.url : image"
+          [alt]="official().name"
+        />
       </figure>
     </div>
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{ official().fields.name }}</strong> <br />
-          <small>{{ official().fields.type?.[0] }}</small>
+          <strong>{{ official().name }}</strong> <br />
+          <small>{{ official()?.type?.[0] }}</small>
         </p>
 
-        <p class="m-0" *ngIf="official().fields.phoneNumber">
-          <a href="tel:{{ official().fields.phoneNumber }}"
-            ><small>{{ official().fields.phoneNumber }}</small></a
+        <p class="m-0" *ngIf="official().phoneNumber">
+          <a href="tel:{{ official().phoneNumber }}"
+            ><small>{{ official().phoneNumber }}</small></a
           >
         </p>
 
-        <p *ngIf="official().fields.emailAddress">
+        <p *ngIf="official().emailAddress">
           <a
             class="has-text-primary"
-            href="mailto:{{ official().fields.emailAddress }}"
+            href="mailto:{{ official().emailAddress }}"
           >
-            <small>{{ official().fields.emailAddress }}</small>
+            <small>{{ official().emailAddress }}</small>
           </a>
         </p>
       </div>

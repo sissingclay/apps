@@ -15,11 +15,21 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { AsyncPipe, JsonPipe } from '@angular/common';
-import { TEAM_URL, UNDER } from '../../../shared/helpers/helpers.year';
+import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import {
+  TEAM_URL,
+  UNDER,
+  yearsArrayList,
+} from '../../../shared/helpers/helpers.year';
 import { TEAMS } from '@apps/ui';
 import { DestroyService } from '../../../shared/services/destroy/destroy.service';
 import { filter, takeUntil } from 'rxjs';
+import {
+  Team,
+  YearGroupCollection,
+  YearMetaData,
+} from '../../../shared/interface/teams.interface';
+import { Observable } from '@apollo/client';
 
 @Component({
   selector: 'app-team',
@@ -32,51 +42,39 @@ import { filter, takeUntil } from 'rxjs';
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
+    NgIf,
     JsonPipe,
   ],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss',
 })
 export class TeamComponent extends DestroyService implements OnInit {
-  public year = '';
-  public under!: any;
+  public year!: Date;
+  public under!: number;
+  public yearData!: YearMetaData;
   public readonly TEAMS_URL = TEAMS;
-  public teamSlug = '';
-  public team: any;
 
   public storeService = inject(StoreService);
-  private route = inject(ActivatedRoute);
+  public route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.year = this.route.snapshot.params['under'];
-    this.under = UNDER(this.year);
+    const yearParams = this.route.snapshot.params['under'];
+    this.under = parseInt(yearParams?.substring(6), 10);
 
-    this.storeService.getYearGroupData();
-    this.storeService.getYearTeamsData();
+    let count = 0;
+    while (this.under > 7) {
+      count = count + 1;
+      this.under = this.under - 1;
+    }
 
-    this.loadData();
+    const date = new Date(`${new Date().getFullYear()}-08-01T00:00:00.000Z`);
+    this.year = new Date(date.setFullYear(date.getFullYear() - count));
+    this.yearData = UNDER(this.year);
 
-    this.storeService.teamSlug$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.loadData();
-      },
-    });
+    this.storeService.getTeams(this.year);
   }
 
-  createUnderRouter(slug: string) {
-    return TEAM_URL(this.year, slug);
-  }
-
-  private loadData(): void {
-    console.log('tsssss');
-    this.storeService
-      .getTeam$(this.storeService.teamSlug$.value)
-      .pipe(filter(Boolean), takeUntil(this.destroy$))
-      .subscribe({
-        next: (res) => {
-          console.log('res', res);
-          this.team = { ...res };
-        },
-      });
+  createUnderRouter(teamSlug: string, page?: string) {
+    return TEAM_URL(this.year, teamSlug, page);
   }
 }

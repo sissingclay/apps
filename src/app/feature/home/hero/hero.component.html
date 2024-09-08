@@ -1,8 +1,11 @@
-<section class="hero" *ngIf="storeService.homeData$ | async as homeData">
+<section
+  class="hero"
+  *ngIf="(storeService.homeData$ | async)?.homeCollection?.items[0] as homeData"
+>
   <div class="hero-body container">
     <section class="columns">
       <section class="column is-4">
-        @for (content of homeData.heroData; track content) {
+        @for (content of homeData?.hero?.json?.content; track content) {
 
         <h1
           class="title is-size-1"
@@ -25,8 +28,8 @@
       <section class="column is-8">
         <div class="is-flex is-justify-content-end is-relative">
           <img
-            [src]="homeData.heroImage?.fields?.file?.url"
-            [alt]="homeData.heroImage?.fields?.title"
+            [src]="homeData.heroImage?.url"
+            [alt]="homeData.heroImage?.title"
             class="img image"
           />
           <img

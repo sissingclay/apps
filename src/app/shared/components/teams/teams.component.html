@@ -1,10 +1,5 @@
 <div class="grid">
-  @for (yearGroup of storeService.yearGroupsOrdered$ | async; track yearGroup) {
-  @if (storeService.yearGroups$ | async; as yearGroups) {
-  <app-ui-button
-    class="cell"
-    [year]="yearGroup"
-    [link]="yearGroups"
-  ></app-ui-button>
-  } }
+  @for (yearGroup of storeService.yearGroups$ | async; track yearGroup) {
+  <app-ui-button class="cell" [year]="yearGroup"></app-ui-button>
+  }
 </div>

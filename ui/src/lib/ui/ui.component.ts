@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ROOT, TEAMS } from '../constants/routes.constants';
 import { NgFor } from '@angular/common';
 
@@ -17,7 +17,7 @@ export interface IMenuData {
   standalone: true,
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.scss',
-  imports: [RouterLink, NgFor],
+  imports: [RouterLink, NgFor, RouterLinkActive],
 })
 export class UiAppBarComponent {
   @Input() menuLists!: IMenu[];

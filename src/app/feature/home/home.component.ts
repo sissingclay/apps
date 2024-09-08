@@ -11,7 +11,6 @@ import { UiLibHeroComponent } from './hero/hero.component';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 import { UiLibButtonComponent } from '../../shared/ui/button/button.component';
 import { AppTeamsWidgetComponent } from '../../shared/components/teams/teams.component';
-import { HttpService } from '../../shared/services/http/http.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
