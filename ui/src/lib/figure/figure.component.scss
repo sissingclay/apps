@@ -1,3 +1,5 @@
+@use 'bulma/sass/utilities/mixins';
+
 :host {
   max-width: 650px;
   display: inline-block;
@@ -5,9 +7,13 @@
 }
 
 .tactics {
-  width: 35%;
+  @include mixins.mobile {
+    bottom: 35%;
+  }
+
+  width: 25%;
   height: auto;
   position: absolute;
-  bottom: 25%;
-  right: 4%;
+  bottom: 20%;
+  right: 2%;
 }

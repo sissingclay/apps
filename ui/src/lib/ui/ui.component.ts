@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ROOT, TEAMS } from '../constants/routes.constants';
-import { NgFor } from '@angular/common';
+import { JsonPipe, NgFor } from '@angular/common';
 
 export interface IMenu {
   fields: IMenuData;
@@ -17,10 +17,10 @@ export interface IMenuData {
   standalone: true,
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.scss',
-  imports: [RouterLink, NgFor, RouterLinkActive],
+  imports: [RouterLink, NgFor, RouterLinkActive, JsonPipe],
 })
 export class UiAppBarComponent {
-  @Input() menuLists!: IMenu[];
+  @Input() menuLists: any;
 
   public isActive = false;
 
@@ -28,4 +28,8 @@ export class UiAppBarComponent {
     home: ROOT,
     teams: TEAMS,
   };
+
+  toggleIsActive(): void {
+    this.isActive = !this.isActive;
+  }
 }

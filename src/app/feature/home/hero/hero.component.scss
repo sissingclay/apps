@@ -5,17 +5,10 @@
   background-color: #dcfffd;
 
   .tactics {
-    @include mixins.mobile {
-      width: calc(231px / 2);
-      height: calc(183px / 2);
-      max-width: calc(231px / 2);
-    }
-
-    width: 231px;
-    height: 183px;
-    max-width: 231px;
+    width: 20%;
+    height: auto;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 5%;
+    bottom: 2%;
   }
 }

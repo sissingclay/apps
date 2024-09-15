@@ -8,14 +8,19 @@ import {
 } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 
-const uri = 'https://graphql.contentful.com/content/v1/spaces/wk16unitqhia';
+const CONTENTFUL = {
+  clientId: 'wk16unitqhia',
+  token: 'R1IO4UXYeyfeMO1zR9Qe0eVr7579RJs283a2-7Ygu40',
+};
+
+const uri = `https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL.clientId}`;
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
   const httpLink = inject(HttpLink);
   // Set authentication header
   const auth = setContext((operation, context) => {
     return {
       headers: {
-        Authorization: `Bearer R1IO4UXYeyfeMO1zR9Qe0eVr7579RJs283a2-7Ygu40`,
+        Authorization: `Bearer ${CONTENTFUL.token}`,
       },
     };
   });

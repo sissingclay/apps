@@ -18,7 +18,7 @@
       </a>
 
       <div
-        class="navbar-burger js-burger"
+        class="navbar-burger"
         data-target="navMenuColordark-example"
         (click)="isActive = !isActive"
       >
@@ -39,21 +39,27 @@
           class="navbar-item"
           [routerLink]="routesLinks.home"
           [routerLinkActive]="'is-active'"
-          >Home
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggleIsActive()"
+        >
+          Home
         </a>
         <a
           class="navbar-item"
           [routerLink]="routesLinks.teams"
           [routerLinkActive]="'is-active'"
-          >Teams</a
+          (click)="toggleIsActive()"
         >
-        @for (menu of menuLists; track menu.fields.url) {
+          Teams
+        </a>
+        @for (menu of menuLists; track menu.url) {
         <a
           class="navbar-item"
-          [routerLink]="menu.fields.url"
+          [routerLink]="menu.url"
           [routerLinkActive]="'is-active'"
+          (click)="toggleIsActive()"
         >
-          {{ menu.fields.title }}
+          {{ menu.title }}
         </a>
         }
       </div>

@@ -12,6 +12,10 @@
 
 .spacing {
   margin-bottom: 65px;
+
+  @include mixins.desktop {
+    margin-bottom: 0;
+  }
 }
 
 .logo {
@@ -24,5 +28,12 @@
   @include mixins.desktop {
     max-height: 200px !important;
     left: 45px;
+  }
+}
+
+.navbar-menu {
+  .is-active {
+    background-color: #ffffff;
+    color: #1f273b;
   }
 }

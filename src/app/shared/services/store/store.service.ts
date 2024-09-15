@@ -16,6 +16,8 @@ import {
 } from '../../interface/teams.interface';
 import { PageData, Value } from '../../interface/page.interface';
 import { GET_VALUE } from '../graphql/graphql.value.queries';
+import { GET_MENU } from '../graphql/graphql.menu.queries';
+import { Menu } from '../../interface/menu.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +32,7 @@ export class StoreService {
   private _page$ = new BehaviorSubject<PageData | null>(null);
   private _valueData$ = new BehaviorSubject<Value[] | null>(null);
   private _valueHeroData$ = new BehaviorSubject<Value[] | null>(null);
+  private _menu$ = new BehaviorSubject<Menu[]>([]);
 
   private apollo = inject(Apollo);
 
@@ -62,6 +65,10 @@ export class StoreService {
 
   public get page$(): Observable<PageData | null> {
     return this._page$;
+  }
+
+  public get menu$(): Observable<Menu[]> {
+    return this._menu$;
   }
 
   public getHomeData(): void {
@@ -152,6 +159,16 @@ export class StoreService {
           this._valueHeroData$.next([data?.valueCollection?.items[0]]);
           this._valueData$.next(DATA);
         }
+      });
+  }
+
+  public getMenuData(): void {
+    this.apollo
+      .watchQuery({
+        query: GET_MENU,
+      })
+      .valueChanges.subscribe(({ data, error }: any) => {
+        this._menu$.next(data?.menuCollection?.items);
       });
   }
 }
