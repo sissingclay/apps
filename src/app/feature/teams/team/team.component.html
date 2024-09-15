@@ -16,7 +16,7 @@
     <section class="column is-one-fifth-tablet">
       <aside class="menu">
         <p class="menu-label">Team(s)</p>
-        <ul class="menu-list">
+        <ul class="menu-list sub-menu">
           @for (teams of storeService.teams$ | async; track teams) {
           <li>
             <a
@@ -43,8 +43,12 @@
 
       <div class="tabs mb-6">
         <ul *ngIf="storeService.team$ | async as team">
-          <li routerLinkActive="is-active">
-            <a [routerLink]="createUnderRouter(team.slug)">
+          <li>
+            <a
+              [routerLink]="createUnderRouter(team.slug)"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <span class="icon is-small">
                 <i class="fas fa-image" aria-hidden="true"></i>
               </span>
@@ -52,8 +56,11 @@
             </a>
           </li>
 
-          <li routerLinkActive="is-active">
-            <a [routerLink]="createUnderRouter(team.slug, 'info')">
+          <li>
+            <a
+              [routerLink]="createUnderRouter(team.slug, 'info')"
+              routerLinkActive="is-active"
+            >
               <span class="icon is-small">
                 <i class="fas fa-image" aria-hidden="true"></i>
               </span>

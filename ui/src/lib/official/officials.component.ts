@@ -7,7 +7,7 @@ import { Official } from './officials.interface';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './officials.component.html',
-  styleUrl: './officials.component.css',
+  styleUrl: './officials.component.scss',
 })
 export class OfficialsComponent {
   official = input.required<Official>();

@@ -1,3 +1,9 @@
 :host {
   display: block;
 }
+
+.sub-menu {
+  .is-active {
+    background-color: #dcfffd;
+  }
+}
