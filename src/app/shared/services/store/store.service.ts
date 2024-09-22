@@ -93,6 +93,7 @@ export class StoreService {
               year: year.toISOString(),
             },
           },
+          order: 'name_ASC',
         },
       })
       .valueChanges.subscribe(({ data, error }: any) => {

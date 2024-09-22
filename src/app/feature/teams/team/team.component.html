@@ -43,35 +43,77 @@
 
       <div class="tabs mb-6">
         <ul *ngIf="storeService.team$ | async as team">
-          <li>
+          <li [class.is-active]="detail.isActive">
             <a
               [routerLink]="createUnderRouter(team.slug)"
               routerLinkActive="is-active"
               [routerLinkActiveOptions]="{ exact: true }"
+              #detail="routerLinkActive"
             >
-              <span class="icon is-small">
-                <i class="fas fa-image" aria-hidden="true"></i>
-              </span>
               <span>Team Info</span>
             </a>
           </li>
 
-          <li>
+          <li [class.is-active]="info.isActive">
             <a
               [routerLink]="createUnderRouter(team.slug, 'info')"
               routerLinkActive="is-active"
+              #info="routerLinkActive"
             >
-              <span class="icon is-small">
-                <i class="fas fa-image" aria-hidden="true"></i>
-              </span>
-              <span>Fees</span>
+              <span>Training day</span>
+            </a>
+          </li>
+
+          <li [class.is-active]="match.isActive">
+            <a
+              [routerLink]="createUnderRouter(team.slug, 'match')"
+              routerLinkActive="is-active"
+              #match="routerLinkActive"
+            >
+              <span>Match day</span>
             </a>
           </li>
         </ul>
       </div>
 
-      <section class="columns m-0">
-        <router-outlet></router-outlet>
+      <section class="columns">
+        <section class="column is-two-thirds-tablet content">
+          <router-outlet></router-outlet>
+
+          <h2 class="subtitle is-5">Officals</h2>
+
+          <ng-container *ngIf="storeService.team$ | async as team">
+            @for (official of team.officialsCollection.items; track official) {
+            <lib-officials [official]="official" class="mb-5"></lib-officials>
+            }
+          </ng-container>
+        </section>
+
+        <section class="column" *ngIf="storeService.team$ | async as team">
+          <lib-ui-figure
+            *ngIf="team?.image?.url"
+            [image]="$any(team?.image?.url)"
+            class="mb-2"
+          ></lib-ui-figure>
+
+          <section class="content">
+            <h3 class="subtitle is-5">Our Sponsors</h3>
+            <div class="columns is-multiline is-vcentered">
+              @for (sponsor of team.sponsorCollection.items; track sponsor) {
+              <div class="column">
+                <a [href]="sponsor?.domain" target="_blank">
+                  <figure class="image is-64x64">
+                    <img
+                      [attr.src]="sponsor.logo.url"
+                      [attr.alt]="sponsor.name"
+                    />
+                  </figure>
+                </a>
+              </div>
+              }
+            </div>
+          </section>
+        </section>
       </section>
     </section>
   </article>

@@ -1,34 +1,3 @@
-<section class="columns" *ngIf="storeService.team$ | async as team">
-  <section class="column is-two-thirds-tablet content">
-    <app-rte [rte]="team.description.json.content"></app-rte>
-
-    <h2 class="subtitle is-5">Officals</h2>
-
-    @for (official of team.officialsCollection.items; track official) {
-    <lib-officials [official]="official" class="mb-5"></lib-officials>
-    }
-  </section>
-
-  <section class="column">
-    <lib-ui-figure
-      *ngIf="team?.image?.url"
-      [image]="$any(team?.image?.url)"
-      class="mb-2"
-    ></lib-ui-figure>
-
-    <section class="content">
-      <h3 class="subtitle is-5">Our Sponsors</h3>
-      <div class="columns is-multiline is-vcentered">
-        @for (sponsor of team.sponsorCollection.items; track sponsor) {
-        <div class="column">
-          <a [href]="sponsor?.domain" target="_blank">
-            <figure class="image is-64x64">
-              <img [attr.src]="sponsor.logo.url" [attr.alt]="sponsor.name" />
-            </figure>
-          </a>
-        </div>
-        }
-      </div>
-    </section>
-  </section>
-</section>
+<ng-container *ngIf="storeService.team$ | async as team">
+  <app-rte [rte]="team.description.json.content"></app-rte>
+</ng-container>

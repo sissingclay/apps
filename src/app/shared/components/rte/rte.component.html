@@ -2,4 +2,11 @@
 <p [innerHTML]="type.content[0].value"></p>
 } @if (type.nodeType === 'heading-2') {
 <h2 class="subtitle is-5" [innerHTML]="type.content[0].value"></h2>
+} @if (type.nodeType === 'unordered-list') {
+<ul>
+  @for (content of type.content; track content) {
+  <li>{{ content.content[0].content[0].value }}</li>
+  }
+</ul>
+<div [innerHTML]="type.content[0].value"></div>
 } }

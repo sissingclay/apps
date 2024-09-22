@@ -48,6 +48,13 @@ export const appRoutes: Route[] = [
                     (mod) => mod.InfoComponent
                   ),
               },
+              {
+                path: 'match',
+                loadComponent: () =>
+                  import('./feature/teams/team/match/match.component').then(
+                    (mod) => mod.MatchComponent
+                  ),
+              },
             ],
           },
         ],
