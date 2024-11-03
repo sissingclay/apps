@@ -84,19 +84,29 @@
 
           <ng-container *ngIf="storeService.team$ | async as team">
             @for (official of team.officialsCollection.items; track official) {
-            <lib-officials [official]="official" class="mb-5"></lib-officials>
+            <lib-officials
+              [official]="official"
+              [showEmail]="false"
+              class="mb-5"
+            ></lib-officials>
             }
           </ng-container>
         </section>
 
         <section class="column" *ngIf="storeService.team$ | async as team">
           <lib-ui-figure
-            *ngIf="team?.image?.url"
-            [image]="$any(team?.image?.url)"
+            [image]="
+              team?.image?.url
+                ? $any(team?.image?.url)
+                : '/assets/img/football-1396740_1280.jpg'
+            "
             class="mb-2"
           ></lib-ui-figure>
 
-          <section class="content">
+          <section
+            class="content"
+            *ngIf="team?.sponsorCollection?.items?.length"
+          >
             <h3 class="subtitle is-5">Our Sponsors</h3>
             <div class="columns is-multiline is-vcentered">
               @for (sponsor of team.sponsorCollection.items; track sponsor) {

@@ -1,3 +1,42 @@
 <ng-container *ngIf="storeService.team$ | async as team">
+  @if(team?.description?.json?.content) {
   <app-rte [rte]="team.description.json.content"></app-rte>
+  } @else {
+
+  <p>
+    <b>Overview:</b> Welcome to the {{ team.name }} grassroots football team
+    dedicated to nurturing young talent and fostering a love for the game! We
+    believe that football is not just about competition, but about building
+    friendships, developing skills, and enjoying the beautiful game.
+  </p>
+  <p>
+    <b>Coaching Philosophy</b>: Our coaching approach focuses on fun,
+    inclusivity, and skill development. We emphasize teamwork, sportsmanship,
+    and creativity on the pitch. Each session is designed to engage every child,
+    encouraging them to express themselves while learning the fundamentals of
+    football.
+  </p>
+
+  <p>
+    <b>Community Spirit:</b> We aim to create a supportive and welcoming
+    environment for players and their families. Parents are encouraged to get
+    involved, whether by volunteering at training sessions, helping organize
+    events, or cheering on the team during matches.
+  </p>
+  <p><b>Goals:</b></p>
+
+  <ul>
+    <li>Foster a love for football in a safe and fun environment</li>
+    <li>Promote physical fitness and teamwork</li>
+    <li>Help players develop fundamental skills and confidence on the pitch</li>
+  </ul>
+
+  <p>
+    Join the {{ team.name }} and be part of an exciting journey in grassroots
+    football! Whether your child is new to the game or has some experience,
+    there’s a place for everyone on our team. Let's play, learn, and grow
+    together!
+  </p>
+
+  }
 </ng-container>

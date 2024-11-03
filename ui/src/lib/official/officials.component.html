@@ -16,13 +16,13 @@
           <small>{{ official().type[0] }}</small>
         </p>
 
-        <p class="m-0" *ngIf="official().phoneNumber">
+        <p class="m-0" *ngIf="official().phoneNumber && showPhoneNumber">
           <a href="tel:{{ official().phoneNumber }}"
             ><small>{{ official().phoneNumber }}</small></a
           >
         </p>
 
-        <p *ngIf="official().emailAddress">
+        <p *ngIf="official().emailAddress && showEmail">
           <a
             class="has-text-primary"
             href="mailto:{{ official().emailAddress }}"

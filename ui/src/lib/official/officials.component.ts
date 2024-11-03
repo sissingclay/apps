@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, Input, input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Official } from './officials.interface';
 
@@ -11,6 +11,8 @@ import { Official } from './officials.interface';
 })
 export class OfficialsComponent {
   official = input.required<Official>();
+  @Input() showEmail = true;
+  @Input() showPhoneNumber = false;
 
   image = 'https://bulma.io/assets/images/placeholders/128x128.png';
 }
