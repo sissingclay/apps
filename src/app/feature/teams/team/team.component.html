@@ -73,6 +73,15 @@
               <span>Match day</span>
             </a>
           </li>
+          <li [class.is-active]="match.isActive">
+            <a
+              [routerLink]="createUnderRouter(team.slug, 'resources')"
+              routerLinkActive="is-active"
+              #match="routerLinkActive"
+            >
+              <span>Resources</span>
+            </a>
+          </li>
         </ul>
       </div>
 

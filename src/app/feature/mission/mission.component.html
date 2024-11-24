@@ -157,11 +157,11 @@
   <section class="hero-body">
     <h2 class="title is-size-4">Meet the committee members</h2>
     <div class="columns is-multiline">
-      @for (item of (storeService.page$| async)?.officialCollection?.items ;
-      track item) {
+      @for (item of officials$ | async; track item) {
       <lib-officials
         class="column is-half officials"
         [official]="item"
+        [isCommittee]="true"
       ></lib-officials>
       }
     </div>

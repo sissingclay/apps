@@ -55,6 +55,13 @@ export const appRoutes: Route[] = [
                     (mod) => mod.MatchComponent
                   ),
               },
+              {
+                path: 'resources',
+                loadComponent: () =>
+                  import(
+                    './feature/teams/team/resource/resource.component'
+                  ).then((mod) => mod.ResourceComponent),
+              },
             ],
           },
         ],

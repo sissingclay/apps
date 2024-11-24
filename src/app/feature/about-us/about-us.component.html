@@ -10,52 +10,17 @@
 
 <section class="hero container">
   <section class="hero-body">
-    <p class="subtitle">
-      The Club was formed by a group of parents to offer football to kids based
-      in the West Exe area of Exeter. From that first meeting at the Seven Stars
-      public house the Club was formed with six teams entering local leagues in
-      the Exeter area. In 2020 the Club should have celebrated its 20 th
-       anniversary, be sure to keep checking back for updates on our planned
-      celebrations to mark the occasion.
-    </p>
-
-    <p class="subtitle">
-      This coming season will see the Club well represented in local leagues
-      with teams represented in 12 age groups. As one of only a handful of clubs
-      in the Exeter area to have attained the Charter Standard Club award West
-      Exe will continue to ensure coaches take the various coaching
-      opportunities available, and promote participation as well as healthy
-      competition within the Club. We have a dedicated committee who give up
-      their time voluntarily on match days and for training sessions in addition
-      to attending meetings and assisting at fund raising and social events for
-      the Club. I would ask that all players and parents give them as much
-      support as possible. It need not be a big time commitment but everything
-      helps and is appreciated. My thanks again go to our numerous sponsors
-      whose support is an integral part in the running of a successful football
-      club.
-    </p>
-
-    <p class="subtitle">
-      Please remember that this is a family Club and active participation by
-      parents and supporters is as important as the efforts of players
-      and committee members; please play your part in ensuring the future
-      success of the Club both on and off the field. I would just like to
-      emphasise that as a Charter Standard Club we expect high standards of
-      behaviour and request both players and supporters conduct themselves in an
-      appropriate manner when representing the Club. I would like thank you for
-      your support and wish managers, players and supporters another enjoyable
-      and successful season.
-    </p>
+    <app-rte [rte]="(page$ | async)?.content?.json?.content"></app-rte>
   </section>
 
   <section class="hero-body">
     <h2 class="title is-size-4">Meet the committee members</h2>
     <div class="columns is-multiline">
-      @for (item of (storeService.page$| async)?.officialCollection?.items ;
-      track item) {
+      @for (item of officials$ | async; track item) {
       <lib-officials
         class="column is-half officials"
         [official]="item"
+        [isCommittee]="true"
       ></lib-officials>
       }
     </div>

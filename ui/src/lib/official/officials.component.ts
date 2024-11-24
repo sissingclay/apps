@@ -13,6 +13,7 @@ export class OfficialsComponent {
   official = input.required<Official>();
   @Input() showEmail = true;
   @Input() showPhoneNumber = false;
+  @Input() isCommittee = false;
 
   image = 'https://bulma.io/assets/images/placeholders/128x128.png';
 }

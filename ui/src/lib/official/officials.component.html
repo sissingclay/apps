@@ -11,9 +11,11 @@
     </div>
     <div class="media-content">
       <div class="content">
-        <p class="mb-2">
+        <p class="mb-0">
           <strong>{{ official().name }}</strong> <br />
-          <small>{{ official().type[0] }}</small>
+          <small>{{
+            isCommittee ? official().commiteeType?.[0] : official().type[0]
+          }}</small>
         </p>
 
         <p class="m-0" *ngIf="official().phoneNumber && showPhoneNumber">
@@ -30,6 +32,11 @@
             <small>{{ official().emailAddress }}</small>
           </a>
         </p>
+
+        @if (isCommittee) {
+        <p><b>Responsibilities</b><br />{{ official().responsibilities }}</p>
+        <p><b>Impact</b><br />{{ official().impact }}</p>
+        }
       </div>
     </div>
   </article>

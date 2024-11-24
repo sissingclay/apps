@@ -4,7 +4,6 @@ import { Apollo } from 'apollo-angular';
 import { GET_HOME_HERO } from '../graphql/graphql.home.queries';
 import { HomeCollection } from '../../interface/home.interface';
 import {
-  GET_PAGE,
   GET_TEAM,
   GET_YEAR_GROUPS,
   GET_YEAR_TEAMS,
@@ -14,10 +13,13 @@ import {
   TeamCollection,
   YearGroupCollection,
 } from '../../interface/teams.interface';
-import { PageData, Value } from '../../interface/page.interface';
+import { IOfficials, PageData, Value } from '../../interface/page.interface';
 import { GET_VALUE } from '../graphql/graphql.value.queries';
 import { GET_MENU } from '../graphql/graphql.menu.queries';
 import { Menu } from '../../interface/menu.interface';
+import { GET_PAGE } from '../graphql/graphql.page.queries';
+import { GET_OFFICIALS } from '../graphql/graphql.officials.queries';
+import { Official } from 'ui/src/lib/official/officials.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +35,7 @@ export class StoreService {
   private _valueData$ = new BehaviorSubject<Value[] | null>(null);
   private _valueHeroData$ = new BehaviorSubject<Value[] | null>(null);
   private _menu$ = new BehaviorSubject<Menu[]>([]);
+  private _officials$ = new BehaviorSubject<Official[]>([]);
 
   private apollo = inject(Apollo);
 
@@ -65,6 +68,10 @@ export class StoreService {
 
   public get page$(): Observable<PageData | null> {
     return this._page$;
+  }
+
+  public get officials$(): Observable<Official[]> {
+    return this._officials$;
   }
 
   public get menu$(): Observable<Menu[]> {
@@ -145,6 +152,25 @@ export class StoreService {
       })
       .valueChanges.subscribe(({ data, error }: any) => {
         this._page$.next(data.pageCollection.items[0]);
+      });
+  }
+
+  public getOfficialsData(): void {
+    this.apollo
+      .watchQuery({
+        query: GET_OFFICIALS,
+        variables: {
+          order: 'order_ASC',
+          where: {
+            commiteeMember: true,
+          },
+        },
+      })
+      .valueChanges.subscribe(({ data, error }: any) => {
+        const DATA = data?.officialsCollection?.items
+          ? data?.officialsCollection?.items
+          : [];
+        this._officials$.next(DATA);
       });
   }
 

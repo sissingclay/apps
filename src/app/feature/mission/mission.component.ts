@@ -12,8 +12,10 @@ import { AsyncPipe } from '@angular/common';
 })
 export class MissionComponent implements OnInit {
   public storeService = inject(StoreService);
+  public officials$ = this.storeService.officials$;
 
   ngOnInit(): void {
     this.storeService.getPageData('about-us');
+    this.storeService.getOfficialsData();
   }
 }

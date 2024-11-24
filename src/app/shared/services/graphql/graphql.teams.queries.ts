@@ -73,28 +73,4 @@ const GET_TEAM = gql`
   }
 `;
 
-const GET_PAGE = gql`
-  query PageCollection($where: PageFilter, $limit: Int) {
-    pageCollection(where: $where, limit: $limit) {
-      items {
-        title
-        slug
-        officialCollection {
-          items {
-            phoneNumber
-            type
-            name
-            emailAddress
-            image {
-              url
-              title
-              description
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export { GET_YEAR_GROUPS, GET_YEAR_TEAMS, GET_TEAM, GET_PAGE };
+export { GET_YEAR_GROUPS, GET_YEAR_TEAMS, GET_TEAM };
