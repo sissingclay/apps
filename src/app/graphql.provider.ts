@@ -1,6 +1,7 @@
 import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApplicationConfig, inject } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import {
   ApolloClientOptions,
   InMemoryCache,
@@ -14,14 +15,13 @@ const CONTENTFUL = {
 };
 
 const uri = `https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL.clientId}`;
-export function apolloOptionsFactory(): ApolloClientOptions<any> {
+export function apolloOptionsFactory(): ApolloClientOptions {
   const httpLink = inject(HttpLink);
-  // Set authentication header
-  const auth = setContext((operation, context) => {
+  const auth = setContext((_, context) => {
+    const headers = context.headers ?? new HttpHeaders();
+
     return {
-      headers: {
-        Authorization: `Bearer ${CONTENTFUL.token}`,
-      },
+      headers: headers.set('Authorization', `Bearer ${CONTENTFUL.token}`),
     };
   });
 

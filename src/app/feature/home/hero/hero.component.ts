@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { StoreService } from '../../../shared/services/store/store.service';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { ABOUT_US, TEAMS } from '@apps/ui';
@@ -13,7 +13,7 @@ import { ABOUT_US, TEAMS } from '@apps/ui';
 @Component({
   selector: 'app-ui-hero',
   standalone: true,
-  imports: [AsyncPipe, NgIf, JsonPipe, RouterLink],
+  imports: [AsyncPipe, JsonPipe, RouterLink],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -62,6 +62,13 @@ export const appRoutes: Route[] = [
                     './feature/teams/team/resource/resource.component'
                   ).then((mod) => mod.ResourceComponent),
               },
+              {
+                path: 'submit-interest',
+                loadComponent: () =>
+                  import(
+                    './feature/teams/team/submit-interest/submit-interest.component'
+                  ).then((mod) => mod.SubmitInterestComponent),
+              },
             ],
           },
         ],

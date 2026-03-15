@@ -1,44 +1,44 @@
-<section
-  class="hero"
-  *ngIf="(storeService.homeData$ | async)?.homeCollection?.items[0] as homeData"
->
-  <div class="hero-body container">
-    <section class="columns">
-      <section class="column is-4">
-        @for (content of homeData?.hero?.json?.content; track content) {
-
-        <h1
-          class="title is-size-1"
-          *ngIf="content.nodeType === 'heading-1'"
-          [textContent]="content.content?.[0].value"
-        ></h1>
-        <p
-          class="subtitle is-4 mt-4"
-          *ngIf="content.nodeType !== 'heading-1'"
-          [textContent]="content.content?.[0].value"
-        ></p>
-
-        }
-        <a class="button is-primary mr-2 mb-2" [routerLink]="routeAbout">
-          About the Club
-        </a>
-        <a class="button is-white" [routerLink]="routeTeam"> Our Teams </a>
+@if ((storeService.homeData$ | async)?.homeCollection?.items[0]; as homeData) {
+  <section
+    class="hero"
+    >
+    <div class="hero-body container">
+      <section class="columns">
+        <section class="column is-4">
+          @for (content of homeData?.hero?.json?.content; track content) {
+            @if (content.nodeType === 'heading-1') {
+              <h1
+                class="title is-size-1"
+                [textContent]="content.content?.[0].value"
+              ></h1>
+            }
+            @if (content.nodeType !== 'heading-1') {
+              <p
+                class="subtitle is-4 mt-4"
+                [textContent]="content.content?.[0].value"
+              ></p>
+            }
+          }
+          <a class="button is-primary mr-2 mb-2" [routerLink]="routeAbout">
+            About the Club
+          </a>
+          <a class="button is-white" [routerLink]="routeTeam"> Our Teams </a>
+        </section>
+        <section class="column is-8">
+          <div class="is-flex is-justify-content-end is-relative">
+            <img
+              [src]="homeData.heroImage?.url"
+              [alt]="homeData.heroImage?.title"
+              class="img image"
+              />
+            <img
+              src="./../../../../assets/img/tactics.png"
+              class="tactics"
+              aria-hidden="true"
+              />
+          </div>
+        </section>
       </section>
-
-      <section class="column is-8">
-        <div class="is-flex is-justify-content-end is-relative">
-          <img
-            [src]="homeData.heroImage?.url"
-            [alt]="homeData.heroImage?.title"
-            class="img image"
-          />
-          <img
-            src="./../../../../assets/img/tactics.png"
-            class="tactics"
-            aria-hidden="true"
-          />
-        </div>
-      </section>
-    </section>
-  </div>
-</section>
+    </div>
+  </section>
+}

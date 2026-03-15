@@ -6,15 +6,15 @@
   <app-teams-widget></app-teams-widget>
 </section>
 
-<ng-container *ngIf="storeService.valueData$ | async as value">
+@if (storeService.valueData$ | async; as value) {
   <section class="section has-background-info">
     <div class="container has-text-centered">
       <h1 class="title">Our Value</h1>
       <div class="grid" style="--bulma-grid-gap: 2rem">
         @for (figure of value; track figure) {
-        <lib-ui-figure [image]="figure.image.url" class="cell is-relative">
-          {{ figure.details }}
-        </lib-ui-figure>
+          <lib-ui-figure [image]="figure.image.url" class="cell is-relative">
+            {{ figure.details }}
+          </lib-ui-figure>
         }
       </div>
       <div class="is-flex is-justify-content-center">
@@ -22,19 +22,19 @@
       </div>
     </div>
   </section>
-
   <section class="section">
-    <div
-      class="container has-text-centered"
-      *ngIf="(storeService.valueHeroData$ | async)?.[0] as valueHeroData"
-    >
-      <lib-ui-figure
-        [image]="valueHeroData.image.url"
-        [subtitle]="true"
-        class="is-relative"
-      >
-        {{ valueHeroData.details }}
-      </lib-ui-figure>
-    </div>
+    @if ((storeService.valueHeroData$ | async)?.[0]; as valueHeroData) {
+      <div
+        class="container has-text-centered"
+        >
+        <lib-ui-figure
+          [image]="valueHeroData.image.url"
+          [subtitle]="true"
+          class="is-relative"
+          >
+          {{ valueHeroData.details }}
+        </lib-ui-figure>
+      </div>
+    }
   </section>
-</ng-container>
+}

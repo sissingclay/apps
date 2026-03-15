@@ -15,7 +15,7 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import {
   TEAM_URL,
   UNDER,
@@ -42,9 +42,8 @@ import { Observable } from '@apollo/client';
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    NgIf,
-    JsonPipe,
-  ],
+    JsonPipe
+],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss',
 })
@@ -61,15 +60,17 @@ export class TeamComponent extends DestroyService implements OnInit {
     const yearParams = this.route.snapshot.params['under'];
     this.under = parseInt(yearParams?.substring(6), 10);
 
-    let count = 0;
-    while (this.under > 7) {
-      count = count + 1;
-      this.under = this.under - 1;
-    }
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const monthOffset = today.getMonth() < 7 ? 5 : 6;
+    const mappedYear = currentYear + monthOffset - this.under;
+    const date = new Date(`${currentYear}-08-01T00:00:00.000Z`);
 
-    const date = new Date(`${new Date().getFullYear()}-08-01T00:00:00.000Z`);
-    this.year = new Date(date.setFullYear(date.getFullYear() - count));
-    this.yearData = UNDER(this.year);
+    this.year = new Date(date.setFullYear(mappedYear));
+    this.yearData = {
+      label: `Under ${this.under}'s`,
+      slug: `under-${this.under}`,
+    };
 
     this.storeService.getTeams(this.year);
   }

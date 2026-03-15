@@ -8,7 +8,7 @@ import {
 import { MISSION, UiLibFigureComponent } from '@apps/ui';
 import { StoreService } from '../../shared/services/store/store.service';
 import { UiLibHeroComponent } from './hero/hero.component';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { UiLibButtonComponent } from '../../shared/ui/button/button.component';
 import { AppTeamsWidgetComponent } from '../../shared/components/teams/teams.component';
 import { RouterLink } from '@angular/router';
@@ -24,9 +24,8 @@ import { RouterLink } from '@angular/router';
     JsonPipe,
     AppTeamsWidgetComponent,
     AsyncPipe,
-    NgIf,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ROOT, TEAMS } from '../constants/routes.constants';
-import { JsonPipe, NgFor } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 
 export interface IMenu {
   fields: IMenuData;
@@ -17,7 +17,7 @@ export interface IMenuData {
   standalone: true,
   templateUrl: './ui.component.html',
   styleUrl: './ui.component.scss',
-  imports: [RouterLink, NgFor, RouterLinkActive, JsonPipe],
+  imports: [RouterLink, RouterLinkActive, JsonPipe],
 })
 export class UiAppBarComponent {
   @Input() menuLists: any;

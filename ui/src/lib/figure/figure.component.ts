@@ -1,11 +1,11 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'lib-ui-figure',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './figure.component.html',
   styleUrl: './figure.component.scss',
 })

@@ -6,7 +6,7 @@
           class="is-rounded"
           [src]="official().image ? official().image.url : image"
           [alt]="official().name"
-        />
+          />
       </figure>
     </div>
     <div class="media-content">
@@ -18,26 +18,25 @@
           }}</small>
         </p>
 
-        <p class="m-0" *ngIf="official().phoneNumber && showPhoneNumber">
-          <a href="tel:{{ official().phoneNumber }}"
-            ><small>{{ official().phoneNumber }}</small></a
-          >
-        </p>
+        @if (official().phoneNumber && showPhoneNumber) {
+          <p class="m-0">
+            <a href="tel:{{ official().phoneNumber }}"
+              ><small>{{ official().phoneNumber }}</small></a
+              >
+            </p>
+          }
 
-        <p *ngIf="official().emailAddress && showEmail">
-          <a
-            class="has-text-primary"
-            href="mailto:{{ official().emailAddress }}"
-          >
-            <small>{{ official().emailAddress }}</small>
-          </a>
-        </p>
-
-        @if (isCommittee) {
-        <p><b>Responsibilities</b><br />{{ official().responsibilities }}</p>
-        <p><b>Impact</b><br />{{ official().impact }}</p>
-        }
+          @if (official().emailAddress && showEmail) {
+            <p>
+              <a
+                class="has-text-primary"
+                href="mailto:{{ official().emailAddress }}"
+                >
+                <small>{{ official().emailAddress }}</small>
+              </a>
+            </p>
+          }
+        </div>
       </div>
-    </div>
-  </article>
-</div>
+    </article>
+  </div>

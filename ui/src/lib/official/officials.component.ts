@@ -1,11 +1,11 @@
 import { Component, Input, input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Official } from './officials.interface';
 
 @Component({
   selector: 'lib-officials',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './officials.component.html',
   styleUrl: './officials.component.scss',
 })

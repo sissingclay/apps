@@ -1,0 +1,66 @@
+<h2>Submit interest</h2>
+
+<section class="interest-form box mb-5">
+  <h3 class="title is-5 mb-2">Register Your Child's Interest</h3>
+  <p class="mb-4">
+    Complete the form below and we will contact you with the next steps.
+  </p>
+
+  <form [formGroup]="interestForm" (ngSubmit)="submitInterest()" novalidate>
+    <div class="field">
+      <label class="label" for="fullName">Full name</label>
+      <div class="control">
+        <input id="fullName" class="input" type="text" formControlName="fullName" />
+      </div>
+      @if (interestForm.controls.fullName.touched && interestForm.controls.fullName.invalid) {
+        <p class="help is-danger">Please enter the full name.</p>
+      }
+    </div>
+
+    <div class="field">
+      <label class="label" for="emailAddress">Email address</label>
+      <div class="control">
+        <input id="emailAddress" class="input" type="email" formControlName="emailAddress" />
+      </div>
+      @if (interestForm.controls.emailAddress.touched && interestForm.controls.emailAddress.invalid) {
+        <p class="help is-danger">Please enter a valid email address.</p>
+      }
+    </div>
+
+    <div class="field">
+      <label class="label" for="phone">Phone</label>
+      <div class="control">
+        <input id="phone" class="input" type="tel" formControlName="phone" />
+      </div>
+      @if (interestForm.controls.phone.touched && interestForm.controls.phone.invalid) {
+        <p class="help is-danger">Please enter a valid phone number.</p>
+      }
+    </div>
+
+    <div class="field">
+      <label class="label" for="kidsDateOfBirth">Kid's date of birth</label>
+      <div class="control">
+        <input id="kidsDateOfBirth" class="input" type="date" formControlName="kidsDateOfBirth" />
+      </div>
+      @if (interestForm.controls.kidsDateOfBirth.touched && interestForm.controls.kidsDateOfBirth.invalid) {
+        <p class="help is-danger">Please select the date of birth.</p>
+      }
+    </div>
+
+    <div class="field is-grouped mt-4">
+      <div class="control">
+        <button class="button is-primary" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Submitting...' : 'Submit Interest' }}
+        </button>
+      </div>
+    </div>
+
+    @if (submitSuccess) {
+      <p class="help is-success">Thank you. Your interest has been submitted.</p>
+    }
+
+    @if (submitError) {
+      <p class="help is-danger">{{ submitError }}</p>
+    }
+  </form>
+</section>

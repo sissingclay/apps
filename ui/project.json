@@ -3,14 +3,15 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "ui/src",
   "prefix": "lib",
-  "tags": [],
   "projectType": "library",
+  "tags": [],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "ui/jest.config.ts"
+        "jestConfig": "ui/jest.config.ts",
+        "tsConfig": "ui/tsconfig.spec.json"
       }
     },
     "lint": {

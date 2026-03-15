@@ -20,8 +20,8 @@ export const UNDER = (year: Date): YearMetaData => {
   }
 
   const update_url = {
-    label: `Under ${count + 7}'s`,
-    slug: `under-${count + 7}`,
+    label: `Under ${count + 6}'s`,
+    slug: `under-${count + 6}`,
   };
 
   return update_url;
